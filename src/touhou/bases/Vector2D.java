@@ -71,4 +71,7 @@ public class Vector2D {
         float mag = magnitude();
         return new Vector2D(this.x / mag, this.y / mag);
     }
-}
+
+    public Vector2D multiply(int x, int y) {return new Vector2D(this.x * x, this.y * y);}
+    }
+

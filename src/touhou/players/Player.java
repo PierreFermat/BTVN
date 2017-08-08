@@ -11,9 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-/**
- * Created by huynq on 8/2/17.
- */
+
 public class Player {
     private static final int SPEED = 5;
     private Vector2D position;
@@ -21,7 +19,6 @@ public class Player {
     private Constraints constraints;
     public ArrayList<PlayerSpell> playerSpells;
     private ImageRenderer renderer;
-
     private FrameCounter coolDownCounter;
     private boolean spellLock;
 
@@ -81,6 +78,7 @@ public class Player {
         }
     }
 
+
     public void render(Graphics2D g2d) {
         renderer.render(g2d, position);
     }
@@ -88,4 +86,6 @@ public class Player {
     public void setInputManager(InputManager inputManager) {
         this.inputManager = inputManager;
     }
+
+
 }

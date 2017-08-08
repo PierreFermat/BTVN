@@ -7,16 +7,14 @@ import touhou.bases.renderers.ImageRenderer;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by huynq on 8/2/17.
- */
+
 public class PlayerSpell {
     public Vector2D position;
     public ImageRenderer renderer;
 
     public PlayerSpell() {
         this.renderer = new ImageRenderer(SpriteUtils.loadImage(
-                "assets/images/player-spells/a/0.png"
+                "assets/images/player-spells/a/1.png"
         ));
         position = new Vector2D();
     }
