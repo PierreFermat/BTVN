@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class EnemySpell {
     public Vector2D position;
     private ImageRenderer renderer;
-    private final int SPEED = 10;
+    private final int SPEED = 4;
 
     public EnemySpell() {
         position = new Vector2D();

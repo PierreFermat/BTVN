@@ -40,4 +40,7 @@ public class Background {
     }
 
 
+    public int getWidth() {
+        return (int) position.x ;
+    }
 }

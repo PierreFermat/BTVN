@@ -16,7 +16,7 @@ public class Player {
     private static final int SPEED = 5;
     private Vector2D position;
     private InputManager inputManager;
-    private Constraints constraints;
+    public Constraints constraints;
     public ArrayList<PlayerSpell> playerSpells;
     private ImageRenderer renderer;
     private FrameCounter coolDownCounter;

@@ -17,6 +17,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -35,12 +36,14 @@ public class GameWindow extends Frame {
 
     ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
     ArrayList<Enemy> enemies = new ArrayList<>();
-    //ArrayList<EnemySpell> enemySpells = new ArrayList<>();
+    ArrayList<EnemySpell> enemySpells = new ArrayList<>();
 
 
     InputManager inputManager = new InputManager();
     private FrameCounter TimeAttack;
-
+    private boolean bossApear;
+    Random generator = new Random();
+    private Constraints constraints;
 
 
     public GameWindow() {
@@ -51,10 +54,10 @@ public class GameWindow extends Frame {
         for (Enemy enemy:enemies){
             enemy.setConstraints(new Constraints(0,768,0,384));
         }
-        //for(Enemy enemy: enemies){
-            //enemy.enemySpells = this.enemySpells;
-        //}
-
+        for(Enemy enemy: enemies){
+            enemy.enemySpells = this.enemySpells;
+        }
+        TimeAttack = new FrameCounter(30);
 
         setupGameLoop();
         setupWindow();
@@ -74,7 +77,8 @@ public class GameWindow extends Frame {
         this.backbufferGraphics = (Graphics2D) this.backbufferImage.getGraphics();
 
         this.windowGraphics = (Graphics2D) this.getGraphics();
-        TimeAttack = new FrameCounter(30);
+
+
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -120,12 +124,39 @@ public class GameWindow extends Frame {
         for (PlayerSpell playerSpell : playerSpells) {
             playerSpell.run();
         }
-        enemiesAttack();
+
+        if (TimeAttack.run()) {
+            String str;
+            if (background.position.y != 0) {
+                if (System.currentTimeMillis() % 5 == 0) {
+                    str = "pink";
+                } else {
+                    str = "blue";
+                }
+            }
+            else
+                str = "black";
+            if (!bossApear) {
+                Enemy enemy = new Enemy(str);
+                enemy.constraints = player.constraints;
+                enemy.enemySpells = this.enemySpells;
+                if (str != "black")
+                    enemy.position.set(generator.nextInt(background.getWidth() + 1), 0);
+                else {
+                    enemy.position.set(200, 63);
+                    bossApear = true;
+                }
+                enemies.add(enemy);
+                TimeAttack.reset();
+            }
+        }
+
         for (Enemy enemy : enemies){
             enemy.run();
-            //for (EnemySpell enemySpell: enemySpells){
-            //    enemySpell.run();
-            //}
+
+        }
+        for (EnemySpell enemySpell: enemySpells){
+            enemySpell.run();
         }
 
 
@@ -144,11 +175,15 @@ public class GameWindow extends Frame {
         for (PlayerSpell playerSpell: playerSpells) {
             playerSpell.render(backbufferGraphics);
         }
+
+
+
         for (Enemy enemy :enemies){
             enemy.render(backbufferGraphics);
-            //for (EnemySpell enemySpell : enemySpells){
-            //    enemySpell.render(backbufferGraphics);
-            //}
+
+        }
+        for (EnemySpell enemySpell : enemySpells){
+            enemySpell.render(backbufferGraphics);
         }
 
 
@@ -162,15 +197,7 @@ public class GameWindow extends Frame {
         repaint();
     }
 
-    private void enemiesAttack() {
 
-        if (TimeAttack.run()) {
-            Enemy newenemies = new Enemy();
-            enemies.add(newenemies);
-            newenemies.position.set(background.getPosition().multiply(0,-1/5));
-            TimeAttack.reset();
-        }
 
-    }
 
 }

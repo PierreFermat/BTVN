@@ -15,20 +15,25 @@ import java.util.ArrayList;
 
 public class Enemy {
     public Vector2D position;
-    private Constraints constraints;
+    public Constraints constraints;
     private FrameCounter frameCounter;
     private ImageRenderer renderer;
-    //public ArrayList<EnemySpell> enemySpells;
+    public ArrayList<EnemySpell> enemySpells;
+    private boolean spellLock;
+    String color;
 
 
-    private final int SPEED = 3;
-    private final int ConstAlpha = 2;
+    private final int SPEED = 5;
 
-    public Enemy() {
+
+    public Enemy( String color) {
         position = new Vector2D();
-        BufferedImage image = SpriteUtils.loadImage("assets/images/enemies/level0/black/0.png");
+
+
+        BufferedImage image;
+        image = SpriteUtils.loadImage("assets/images/enemies/level0/"+ color + "/0.png");
         renderer = new ImageRenderer(image);
-        frameCounter = new FrameCounter(10);
+        frameCounter = new FrameCounter(20);
     }
 
     public void run(){
@@ -36,29 +41,38 @@ public class Enemy {
             constraints.make(position);
         }
 
-        position.addUp(SPEED, SPEED + ConstAlpha);
-        //castSpell();
+        position.addUp(3, SPEED);
+
+        castSpell();
     }
 
-    //private void castSpell() {
-      //  if (frameCounter.run()) {
-        //    EnemySpell enemySpell = new EnemySpell();
-        //     enemySpell.position.set(this.position);
-    // enemySpells.add(enemySpell);
-            //frameCounter.reset();
-        //}
+    private void castSpell() {
+        if (!spellLock) {
+            EnemySpell newSpell = new EnemySpell();
+            newSpell.position.set(this.position.add(0, +50));
+            enemySpells.add(newSpell);
 
-    //}
-
-    public void render(Graphics2D g2d){
-        renderer.render(g2d, position);
-    }
-
-    public void setConstraints(Constraints constraints){
-
-            this.constraints = constraints;
+            spellLock = true;
+            frameCounter.reset();
         }
 
+        unlockSpell();
+    }
+
+    private void unlockSpell() {
+        if (spellLock) {
+            if (frameCounter.run()) {
+                spellLock = false;
+            }
+        }
+    }
+
+    public void setConstraints(Constraints constraints) {
+        this.constraints = constraints;
+    }
+    public void render(Graphics2D g2d) {
+        renderer.render(g2d, position);
+    }
 }
 
 
