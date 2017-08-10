@@ -1,5 +1,6 @@
-package touhou.bases;
+package bases;
 
+import touhou.bases.Vector2D;
 import touhou.bases.renderers.ImageRenderer;
 
 import java.awt.*;

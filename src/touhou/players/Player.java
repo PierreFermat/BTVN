@@ -1,5 +1,7 @@
 package touhou.players;
 
+
+import bases.GameObject;
 import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
 import touhou.bases.FrameCounter;
@@ -12,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
-public class Player {
+public class Player extends GameObject {
     private static final int SPEED = 5;
     private Vector2D position;
     private InputManager inputManager;
