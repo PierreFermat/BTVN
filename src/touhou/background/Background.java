@@ -1,11 +1,7 @@
 package touhou.background;
 
 import tklibs.SpriteUtils;
-import touhou.bases.FrameCounter;
 import touhou.bases.Vector2D;
-import touhou.bases.renderers.ImageRenderer;
-import touhou.enemies.Enemy;
-import touhou.inputs.InputManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -39,8 +35,4 @@ public class Background {
 
     }
 
-
-    public int getWidth() {
-        return (int) position.x ;
-    }
 }

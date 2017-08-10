@@ -5,7 +5,6 @@ import touhou.bases.Vector2D;
 import touhou.bases.renderers.ImageRenderer;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 
 public class PlayerSpell {

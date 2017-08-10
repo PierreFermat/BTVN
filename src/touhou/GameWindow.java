@@ -1,11 +1,8 @@
 package touhou;
 
-import tklibs.SpriteUtils;
+
 import touhou.background.Background;
 import touhou.bases.Constraints;
-import touhou.bases.FrameCounter;
-import touhou.enemies.Enemy;
-import touhou.enemies.EnemySpell;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
 import touhou.players.PlayerSpell;
@@ -17,9 +14,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Random;
-
-import static java.awt.event.KeyEvent.*;
 
 
 public class GameWindow extends Frame {
@@ -35,14 +29,12 @@ public class GameWindow extends Frame {
     Player player = new Player();
 
     ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
-    ArrayList<Enemy> enemies = new ArrayList<>();
-    ArrayList<EnemySpell> enemySpells = new ArrayList<>();
+
 
 
     InputManager inputManager = new InputManager();
-    private FrameCounter TimeAttack;
-    private boolean bossApear;
-    Random generator = new Random();
+
+
     private Constraints constraints;
 
 
@@ -51,13 +43,6 @@ public class GameWindow extends Frame {
         player.setInputManager(this.inputManager);
         player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
         player.playerSpells = this.playerSpells;
-        for (Enemy enemy:enemies){
-            enemy.setConstraints(new Constraints(0,768,0,384));
-        }
-        for(Enemy enemy: enemies){
-            enemy.enemySpells = this.enemySpells;
-        }
-        TimeAttack = new FrameCounter(30);
 
         setupGameLoop();
         setupWindow();
@@ -125,44 +110,6 @@ public class GameWindow extends Frame {
             playerSpell.run();
         }
 
-        if (TimeAttack.run()) {
-            String str;
-            if (background.position.y != 0) {
-                if (System.currentTimeMillis() % 5 == 0) {
-                    str = "pink";
-                } else {
-                    str = "blue";
-                }
-            }
-            else
-                str = "black";
-            if (!bossApear) {
-                Enemy enemy = new Enemy(str);
-                enemy.constraints = player.constraints;
-                enemy.enemySpells = this.enemySpells;
-                if (str != "black")
-                    enemy.position.set(generator.nextInt(background.getWidth() + 1), 0);
-                else {
-                    enemy.position.set(200, 63);
-                    bossApear = true;
-                }
-                enemies.add(enemy);
-                TimeAttack.reset();
-            }
-        }
-
-        for (Enemy enemy : enemies){
-            enemy.run();
-
-        }
-        for (EnemySpell enemySpell: enemySpells){
-            enemySpell.run();
-        }
-
-
-
-
-
 
     }
 
@@ -175,18 +122,6 @@ public class GameWindow extends Frame {
         for (PlayerSpell playerSpell: playerSpells) {
             playerSpell.render(backbufferGraphics);
         }
-
-
-
-        for (Enemy enemy :enemies){
-            enemy.render(backbufferGraphics);
-
-        }
-        for (EnemySpell enemySpell : enemySpells){
-            enemySpell.render(backbufferGraphics);
-        }
-
-
 
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
     }
