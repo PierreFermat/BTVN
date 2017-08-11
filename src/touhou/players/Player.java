@@ -1,48 +1,36 @@
 package touhou.players;
 
-
+import bases.Constraints;
+import bases.FrameCounter;
 import bases.GameObject;
+import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
-import touhou.bases.Constraints;
-import touhou.bases.FrameCounter;
-import touhou.bases.Vector2D;
-import touhou.bases.renderers.ImageRenderer;
 import touhou.inputs.InputManager;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-
+/**
+ * Created by huynq on 8/2/17.
+ */
 public class Player extends GameObject {
     private static final int SPEED = 5;
-    private Vector2D position;
     private InputManager inputManager;
-    public Constraints constraints;
-    public ArrayList<PlayerSpell> playerSpells;
-    private ImageRenderer renderer;
+    private Constraints constraints;
+
     private FrameCounter coolDownCounter;
     private boolean spellLock;
 
     public Player() {
+        super();
         this.spellLock = false;
-        position = new Vector2D(384/2, 600);
-        BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
-        renderer = new ImageRenderer(image);
-        coolDownCounter = new FrameCounter(3);
+        renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
+        coolDownCounter = new FrameCounter(5);
     }
 
     public void setContraints(Constraints contraints) {
         this.constraints = contraints;
     }
 
-    public void setRenderer(ImageRenderer renderer) {
-        if (renderer == null)
-            throw new IllegalArgumentException();
-        this.renderer = renderer;
-    }
-
     public void run() {
+        super.run();
         if (inputManager.upPressed)
             position.addUp(0, -SPEED);
         if (inputManager.downPressed)
@@ -62,8 +50,8 @@ public class Player extends GameObject {
     private void castSpell() {
         if (inputManager.xPressed && !spellLock) {
             PlayerSpell newSpell = new PlayerSpell();
-            newSpell.position.set(this.position.add(0, -30));
-            playerSpells.add(newSpell);
+            newSpell.getPosition().set(this.position.add(0, -30));
+            GameObject.add(newSpell);
 
             spellLock = true;
             coolDownCounter.reset();
@@ -80,14 +68,7 @@ public class Player extends GameObject {
         }
     }
 
-
-    public void render(Graphics2D g2d) {
-        renderer.render(g2d, position);
-    }
-
     public void setInputManager(InputManager inputManager) {
         this.inputManager = inputManager;
     }
-
-
 }

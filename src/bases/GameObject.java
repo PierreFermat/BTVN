@@ -1,44 +1,45 @@
 package bases;
 
-import touhou.bases.Vector2D;
-import touhou.bases.renderers.ImageRenderer;
+import bases.renderers.ImageRenderer;
 
 import java.awt.*;
 import java.util.Vector;
 
-
 public class GameObject {
     protected Vector2D position;
     protected ImageRenderer renderer;
-    private static Vector<GameObject> gameObjects = new Vector<>();
-    private static Vector<GameObject> newgameObjects = new Vector<>();
+
+    protected static Vector<GameObject> gameObjects = new Vector<>();
+    private static Vector<GameObject> newGameObjects = new Vector<>();
 
     public static void runAll(){
-        for(GameObject gameObject:gameObjects){
+        for(GameObject gameObject : gameObjects){
             gameObject.run();
         }
-        gameObjects.addAll(newgameObjects);
-        newgameObjects.clear();
+        gameObjects.addAll(newGameObjects);
+        newGameObjects.clear();
     }
 
     public static void renderAll(Graphics2D g2d){
-        for (GameObject gameObject :gameObjects){
+        for(GameObject gameObject : gameObjects) {
             gameObject.render(g2d);
         }
     }
+
     public static void add(GameObject gameObject){
-        newgameObjects.add(gameObject);
+        newGameObjects.add(gameObject);
     }
 
     public GameObject(){
         position = new Vector2D();
-
     }
+
     public void run(){
 
     }
+
     public void render(Graphics2D g2d){
-        if(renderer != null){
+        if(renderer != null) {
             renderer.render(g2d, position);
         }
     }
@@ -52,12 +53,11 @@ public class GameObject {
     }
 
     public void setPosition(Vector2D position) {
-        if(position != null)
-            this.position = position;
+        this.position = position;
     }
 
     public void setRenderer(ImageRenderer renderer) {
-        if(position != null)
+        if(renderer != null)
             this.renderer = renderer;
     }
 }

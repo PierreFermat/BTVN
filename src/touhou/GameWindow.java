@@ -1,11 +1,11 @@
 package touhou;
 
-
+import bases.Constraints;
+import bases.GameObject;
 import touhou.background.Background;
-import touhou.bases.Constraints;
+import touhou.enemies.EnemySpawner;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
-import touhou.players.PlayerSpell;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,9 +13,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
+//https://github.com/qhuydtvt/ci1-huynq
 
+/**
+ * Created by huynq on 7/29/17.
+ */
 public class GameWindow extends Frame {
 
     private long lastTimeUpdate;
@@ -25,27 +28,30 @@ public class GameWindow extends Frame {
     private BufferedImage backbufferImage;
     private Graphics2D backbufferGraphics;
 
-    Background background = new Background();
     Player player = new Player();
-
-    ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
-
-
-
+    Background background = new Background();
+    EnemySpawner enemySpawner = new EnemySpawner();        //TODO: Sua thanh GameObject
     InputManager inputManager = new InputManager();
-
-
-    private Constraints constraints;
-
 
     public GameWindow() {
         pack();
-        player.setInputManager(this.inputManager);
-        player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
-        player.playerSpells = this.playerSpells;
-
+        addBackground();
+        addPlayer();
         setupGameLoop();
         setupWindow();
+    }
+
+    private void addPlayer() {
+        player.setInputManager(this.inputManager);
+        player.setContraints(new Constraints(getInsets().top, 768, getInsets().left, 384));
+        player.getPosition().set(192,600);
+        GameObject.add(player);
+
+    }
+
+    private void addBackground(){
+        background.getPosition().set(384/2,-800);
+        GameObject.add(background);
     }
 
     private void setupGameLoop() {
@@ -55,15 +61,13 @@ public class GameWindow extends Frame {
     private void setupWindow() {
         this.setSize(1024, 768);
 
-        this.setTitle("Touhou - Remade by CThanh-cntt-bkkstn");
+        this.setTitle("Touhou - Remade by QHuyDTVT");
         this.setVisible(true);
 
         this.backbufferImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         this.backbufferGraphics = (Graphics2D) this.backbufferImage.getGraphics();
 
         this.windowGraphics = (Graphics2D) this.getGraphics();
-
-
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -104,35 +108,19 @@ public class GameWindow extends Frame {
     }
 
     private void run() {
-        player.run();
-
-        for (PlayerSpell playerSpell : playerSpells) {
-            playerSpell.run();
-        }
-
-
+        GameObject.runAll();
+        enemySpawner.spawn();
     }
 
     public void update (Graphics windowGraphics ) {
         backbufferGraphics.setColor(Color.black);
         backbufferGraphics.fillRect(0, 0, 1024, 768);
-        background.render(backbufferGraphics);
         player.render(backbufferGraphics);
 
-        for (PlayerSpell playerSpell: playerSpells) {
-            playerSpell.render(backbufferGraphics);
-        }
-
+        GameObject.renderAll(backbufferGraphics);
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
     }
-
-
-
     private void render(){
         repaint();
     }
-
-
-
-
 }

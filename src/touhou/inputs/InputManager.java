@@ -4,9 +4,6 @@ import java.awt.event.KeyEvent;
 
 import static java.awt.event.KeyEvent.*;
 
-/**
- * Created by huynq on 8/2/17.
- */
 public class InputManager {
     public boolean upPressed;
     public boolean downPressed;

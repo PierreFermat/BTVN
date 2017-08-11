@@ -1,4 +1,4 @@
-package touhou.bases;
+package bases;
 
 /**
  * Created by huynq on 8/5/17.

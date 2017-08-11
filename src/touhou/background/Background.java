@@ -1,38 +1,18 @@
 package touhou.background;
 
+import bases.GameObject;
+import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
-import touhou.bases.Vector2D;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
-
-
-public class Background {
-    private BufferedImage image;
-    public Vector2D position;
-    public static final int BackgroundSpeed = 1;
-
-
+public class Background extends GameObject {
     public Background(){
-        position = new Vector2D(0,-2000);
-        image = SpriteUtils.loadImage("assets/images/background/0.png");
-
+        super();
+        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/background/0.png"));
     }
-    public void movebackground(){
-        position.addUp(0,BackgroundSpeed);
-        if (position.y > 0){
-            position.y = 0;
+
+    public void run() {
+        if(position.y < 3109/2) {
+            position.addUp(0, 1);
         }
     }
-    public Vector2D getPosition() {
-        return position;
-    }
-
-    public void render(Graphics2D g2d){
-        g2d.drawImage(image, (int)position.x, (int)position.y, null);
-        movebackground();
-
-    }
-
 }
