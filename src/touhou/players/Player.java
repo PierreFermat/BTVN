@@ -7,9 +7,6 @@ import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.inputs.InputManager;
 
-/**
- * Created by huynq on 8/2/17.
- */
 public class Player extends GameObject {
     private static final int SPEED = 5;
     private InputManager inputManager;
