@@ -1,6 +1,7 @@
 package touhou.players;
 
 import bases.GameObject;
+import bases.Vector2D;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 
@@ -8,8 +9,9 @@ import tklibs.SpriteUtils;
 public class PlayerSpell extends GameObject {
 
     public PlayerSpell() {
-        super();
+        super(Vector2D, width, height);
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/player-spells/a/1.png"));
+
     }
 
     public void run() {

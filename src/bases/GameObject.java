@@ -4,9 +4,12 @@ import bases.renderers.ImageRenderer;
 
 import java.awt.*;
 import java.util.Vector;
+import java.awt.Rectangle;
 
 public class GameObject {
     protected Vector2D position;
+    protected int width;
+    protected int height;
     protected ImageRenderer renderer;
 
     protected static Vector<GameObject> gameObjects = new Vector<>();
@@ -30,8 +33,21 @@ public class GameObject {
         newGameObjects.add(gameObject);
     }
 
-    public GameObject(){
+    public GameObject(Vector2D,int width, int height){
         position = new Vector2D();
+        this.width = renderer.image.getWidth();
+        this.height = renderer.image.getHeight();
+
+
+
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public void run(){
@@ -59,5 +75,8 @@ public class GameObject {
     public void setRenderer(ImageRenderer renderer) {
         if(renderer != null)
             this.renderer = renderer;
+    }
+    public Rectangle getBound(){
+        return new Rectangle(position.x,position.y,width,height);
     }
 }
