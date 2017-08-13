@@ -1,23 +1,32 @@
 package bases;
 
+import bases.physics.PhysicalBody;
+import bases.physics.Physics;
 import bases.renderers.ImageRenderer;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Vector;
-import java.awt.Rectangle;
 
 public class GameObject {
     protected Vector2D position;
-    protected int width;
-    protected int height;
+    protected Vector2D screenPosition;
     protected ImageRenderer renderer;
+    protected ArrayList<GameObject> children;
+    protected boolean isActive;
 
     protected static Vector<GameObject> gameObjects = new Vector<>();
     private static Vector<GameObject> newGameObjects = new Vector<>();
 
     public static void runAll(){
         for(GameObject gameObject : gameObjects){
-            gameObject.run();
+            if(gameObject.isActive)
+                gameObject.run(new Vector2D(0,0));//TODO: optimize
+        }
+        for(GameObject newgameObject: newGameObjects){
+            if(newgameObject instanceof PhysicalBody){
+                Physics.add((PhysicalBody)newgameObject);
+            }
         }
         gameObjects.addAll(newGameObjects);
         newGameObjects.clear();
@@ -25,38 +34,50 @@ public class GameObject {
 
     public static void renderAll(Graphics2D g2d){
         for(GameObject gameObject : gameObjects) {
-            gameObject.render(g2d);
+            if (gameObject.isActive)
+                gameObject.render(g2d);
         }
     }
+    public boolean IsActive(){
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+    public boolean getActive(){
+        return isActive;
+    }
+
 
     public static void add(GameObject gameObject){
         newGameObjects.add(gameObject);
     }
 
-    public GameObject(Vector2D,int width, int height){
+    public GameObject(){
         position = new Vector2D();
-        this.width = renderer.image.getWidth();
-        this.height = renderer.image.getHeight();
-
-
-
+        screenPosition = new Vector2D();
+        children = new ArrayList<>();
+        isActive = true;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void run(){
+    public void run(Vector2D parentPosition){
+        screenPosition = parentPosition.add(position);
+        for ( GameObject child : children){
+            if(child.isActive)
+                child.run(screenPosition);
+        }
 
     }
 
     public void render(Graphics2D g2d){
         if(renderer != null) {
-            renderer.render(g2d, position);
+            renderer.render(g2d, screenPosition);
+        }
+        for(GameObject child : children){
+            if(child.isActive){
+                child.render(g2d);
+            }
         }
     }
 
@@ -73,10 +94,8 @@ public class GameObject {
     }
 
     public void setRenderer(ImageRenderer renderer) {
-        if(renderer != null)
-            this.renderer = renderer;
+        this.renderer = renderer;
     }
-    public Rectangle getBound(){
-        return new Rectangle(position.x,position.y,width,height);
-    }
+
+
 }

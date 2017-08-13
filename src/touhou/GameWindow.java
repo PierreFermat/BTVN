@@ -32,6 +32,8 @@ public class GameWindow extends Frame {
     Background background = new Background();
     EnemySpawner enemySpawner = new EnemySpawner();        //TODO: Sua thanh GameObject
     InputManager inputManager = new InputManager();
+    Font font = new Font("Arial", Font.BOLD, 12);
+
 
     public GameWindow() {
         pack();
@@ -118,9 +120,12 @@ public class GameWindow extends Frame {
         player.render(backbufferGraphics);
 
         GameObject.renderAll(backbufferGraphics);
+
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
+
     }
     private void render(){
+
         repaint();
     }
 }

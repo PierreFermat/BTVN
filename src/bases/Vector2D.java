@@ -71,4 +71,12 @@ public class Vector2D {
         float mag = magnitude();
         return new Vector2D(this.x / mag, this.y / mag);
     }
+
+    @Override
+    public String toString() {
+        return "Vector2D{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
