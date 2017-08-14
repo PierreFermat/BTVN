@@ -11,11 +11,14 @@ import touhou.enemies.Enemy;
 
 
 public class PlayerSpell extends GameObject implements PhysicalBody {
+    private static final float SPEED = -10 ;
     private BoxCollider boxCollider;
     private float damage;
+    private float typeBullet;
 
-    public PlayerSpell() {
+    public PlayerSpell(float typeBullet) {
         super();
+        this.typeBullet = typeBullet;
         damage = 5;
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/player-spells/a/1.png"));
         boxCollider = new BoxCollider(20,20);
@@ -28,22 +31,31 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
 
     public void run(Vector2D parentPosition) {
         super.run(parentPosition);
-        position.addUp(0, -10);
+        position.addUp(typeBullet, SPEED);
         hitEnemy();
     }
 
     private void hitEnemy() {
         Enemy enemy = Physics.collideWithEnemy(this.boxCollider);
+        if(enemy != null){
+            enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
+            this.isActive = false;
+//            GameObject explosion = new GameObject();
+//            explosion.setPosition(this.getPosition());
+//            GameObject.add(explosion);
 
-        if(enemy != null) {
-            enemy.setActive(false);
         }
-
-
     }
 
     @Override
     public BoxCollider getBoxCollider() {
         return boxCollider;
     }
+
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
+
 }

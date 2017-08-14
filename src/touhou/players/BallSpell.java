@@ -6,21 +6,19 @@ import bases.physics.BoxCollider;
 import bases.physics.Physics;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
-//import touhou.explosion.Explosion;
 import touhou.players.Player;
 
-import java.util.ArrayList;
 
-public class EnemyBullet extends GameObject {
-    private static final float SPEED = 5;
+public class BallSpell extends GameObject {
+    private static final float SPEED = -5;
     public float typebullet;
     private BoxCollider boxCollider;
     private float damage;
 
 
-    public EnemyBullet(float typebullet){
+    public BallSpell(float typebullet){
         super();
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
+        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/sphere-bullets/0.png"));
         this.typebullet = typebullet;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
@@ -30,21 +28,15 @@ public class EnemyBullet extends GameObject {
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         position.addUp(typebullet,SPEED);
-        hitPlayer();
+        hitEnemy();
     }
-    private void hitPlayer() {
-        Player player = Physics.collideWithPlayer(this.boxCollider);
-        if(player != null){
-            player.setHP(player.getHP() - this.damage);
+    private void hitEnemy() {
+        Enemy enemy = Physics.collideWithEnemy(this.boxCollider);
+        if(enemy != null){
+            enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
             this.isActive = false;
-//            GameObject explosion = new GameObject();
-//            explosion.setPosition(this.getPosition());
-//            GameObject.add(explosion);
-
         }
     }
-
-
 
     public BoxCollider getBoxCollider() {
         return this.boxCollider;

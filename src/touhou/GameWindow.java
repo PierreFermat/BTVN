@@ -1,9 +1,11 @@
 package touhou;
 
 import bases.Constraints;
+import bases.FrameCounter;
 import bases.GameObject;
 import touhou.background.Background;
 import touhou.enemies.EnemySpawner;
+//import touhou.explosion.Explosion;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
 
@@ -13,6 +15,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 //https://github.com/qhuydtvt/ci1-huynq
 
@@ -32,8 +35,7 @@ public class GameWindow extends Frame {
     Background background = new Background();
     EnemySpawner enemySpawner = new EnemySpawner();        //TODO: Sua thanh GameObject
     InputManager inputManager = new InputManager();
-    Font font = new Font("Arial", Font.BOLD, 12);
-
+    public FrameCounter powercounter;
 
     public GameWindow() {
         pack();
@@ -41,6 +43,7 @@ public class GameWindow extends Frame {
         addPlayer();
         setupGameLoop();
         setupWindow();
+        powercounter = new FrameCounter(50);
     }
 
     private void addPlayer() {
@@ -106,20 +109,42 @@ public class GameWindow extends Frame {
                 render();
                 lastTimeUpdate = currentTime;
             }
+
         }
     }
 
     private void run() {
         GameObject.runAll();
         enemySpawner.spawn();
+        if(powercounter.run()) {
+            player.setPower(player.getPower() + 1);
+            powercounter.reset();
+        }
     }
 
     public void update (Graphics windowGraphics ) {
         backbufferGraphics.setColor(Color.black);
         backbufferGraphics.fillRect(0, 0, 1024, 768);
         player.render(backbufferGraphics);
-
         GameObject.renderAll(backbufferGraphics);
+        Font font = new Font("Serif", Font.ITALIC, 21);
+        backbufferGraphics.setFont(font);
+        backbufferGraphics.setColor(Color.white);
+        backbufferGraphics.drawString("Your blood :   " + Float.toString(player.getHP()), 400, 90);
+        if (player.getHP() <= 0){
+            Font nfont = new Font("Serif", Font.ITALIC, 80);
+            backbufferGraphics.setFont(nfont);
+            backbufferGraphics.setColor(Color.white);
+            backbufferGraphics.drawString("GAME OVER", 100, 200);
+            //Thread.sleep(4000);
+            //System.exit(0);
+        }
+        Font pfont = new Font("Serif", Font.ITALIC, 21);
+        backbufferGraphics.setFont(font);
+        backbufferGraphics.setColor(Color.red);
+        backbufferGraphics.drawString("Your power :   " + Float.toString(player.getPower()), 400, 150);
+
+
 
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
 

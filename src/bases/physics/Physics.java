@@ -10,8 +10,9 @@ public class Physics {
 
     public static Enemy collideWithEnemy(BoxCollider boxCollider) {
         for(PhysicalBody body : bodies){
-            if(body instanceof Enemy && body.getBoxCollider().intersects(boxCollider)){
+            if(body.isActive()){   if(body instanceof Enemy && body.getBoxCollider().intersects(boxCollider)) {
                 return (Enemy) body;
+                }
             }
         }
         return null;
@@ -23,8 +24,10 @@ public class Physics {
 
     public static Player collideWithPlayer(BoxCollider boxCollider) {
         for(PhysicalBody body : bodies){
-            if(body instanceof Player && body.getBoxCollider().intersects(boxCollider)){
-                return (Player) body;
+            if(body.isActive()) {
+                if (body instanceof Player && body.getBoxCollider().intersects(boxCollider)) {
+                    return (Player) body;
+                }
             }
         }
         return null;

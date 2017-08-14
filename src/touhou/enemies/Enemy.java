@@ -10,21 +10,41 @@ import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.players.Player;
 
+import java.util.Random;
+import java.util.concurrent.Callable;
+
 public class Enemy extends GameObject implements PhysicalBody {
     private static final float SPEED = 2;
     private FrameCounter frameCounter;
     private BoxCollider  boxCollider;
     private float EnemyHP;
     private  float damage;
+    private Random random = new Random();
+    private int typeEnemy;
 
     public Enemy(){
         super();
-        renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png")) ;
         frameCounter = new FrameCounter(30);
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
-        EnemyHP = 10;
         damage = 100;
+        typeEnemy = random.nextInt(4);
+        if(typeEnemy == 0){
+            renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png")) ;
+            setEnemyHP(10);
+        }
+        if(typeEnemy == 2){
+            renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png")) ;
+            setEnemyHP(10);
+        }
+        if(typeEnemy == 3){
+            renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png")) ;
+            setEnemyHP(10);
+        }
+        if(typeEnemy == 1){
+            renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/pink/0.png")) ;
+            setEnemyHP(30);
+        }
     }
 
     public float getDamage() {
@@ -37,14 +57,35 @@ public class Enemy extends GameObject implements PhysicalBody {
         fly();
         shoot();
         hitPlayer();
+        if (this.getEnemyHP() <= 0){
+            this.isActive = false;
+        }
     }
 
-    private void shoot() {
 
+    private void shoot() {
+        if(typeEnemy == 0){
+            bullet_0();
+        }
+        if(typeEnemy == 1){
+            bullet_1();
+        }
+
+
+    }
+    private void bullet_1(){
         if(frameCounter.run()) {
-//            CreatBullet(1,10, 2);
-           CreatBullet(1,10,0);
-//           CreatBullet(1,10,-2);
+            CreatBullet(1,10, 2);
+            CreatBullet(1,10,0);
+            CreatBullet(1,10, -2);
+            frameCounter.reset();
+        }
+    }
+    private void bullet_0(){
+        if(frameCounter.run()) {
+
+            CreatBullet(1,10,0);
+
             frameCounter.reset();
         }
     }
@@ -64,6 +105,11 @@ public class Enemy extends GameObject implements PhysicalBody {
         return this.boxCollider;
     }
 
+    @Override
+    public boolean isActive() {
+        return this.isActive;
+    }
+
     public float getEnemyHP() {
         return EnemyHP;
     }
@@ -75,6 +121,8 @@ public class Enemy extends GameObject implements PhysicalBody {
         Player player = Physics.collideWithPlayer(this.boxCollider);
         if(player != null){
             player.setHP(player.getHP() - this.damage);
+            this.isActive = false;
         }
     }
+
 }

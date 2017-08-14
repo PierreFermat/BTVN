@@ -23,4 +23,13 @@ public class FrameCounter {
         this.count = 0;
     }
 
+    public float getCount() {
+        return count;
+    }
+
+    public void coolDown() {
+        this.count++;
+        if (this.count >= this.countMax)
+            this.count = 0;
+    }
 }
