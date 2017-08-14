@@ -8,6 +8,7 @@ import touhou.enemies.EnemySpawner;
 //import touhou.explosion.Explosion;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
+import touhou.players.Shield;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,6 +17,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import static touhou.players.Shield.*;
 
 //https://github.com/qhuydtvt/ci1-huynq
 
@@ -36,6 +39,7 @@ public class GameWindow extends Frame {
     EnemySpawner enemySpawner = new EnemySpawner();        //TODO: Sua thanh GameObject
     InputManager inputManager = new InputManager();
     public FrameCounter powercounter;
+
 
     public GameWindow() {
         pack();
@@ -117,9 +121,10 @@ public class GameWindow extends Frame {
         GameObject.runAll();
         enemySpawner.spawn();
         if(powercounter.run()) {
-            player.setPower(player.getPower() + 1);
+            player.setPower(player.getPower()+1);
             powercounter.reset();
         }
+
     }
 
     public void update (Graphics windowGraphics ) {

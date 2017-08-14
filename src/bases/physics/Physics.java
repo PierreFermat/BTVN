@@ -1,6 +1,7 @@
 package bases.physics;
 
 import touhou.enemies.Enemy;
+import touhou.enemies.EnemyBullet;
 import touhou.players.Player;
 
 import java.util.Vector;
@@ -27,6 +28,17 @@ public class Physics {
             if(body.isActive()) {
                 if (body instanceof Player && body.getBoxCollider().intersects(boxCollider)) {
                     return (Player) body;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static EnemyBullet collideWithEnemyBullet(BoxCollider boxCollider) {
+        for(PhysicalBody body : bodies){
+            if(body.isActive()) {
+                if (body instanceof EnemyBullet && body.getBoxCollider().intersects(boxCollider)) {
+                    return (EnemyBullet) body;
                 }
             }
         }

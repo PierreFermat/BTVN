@@ -15,6 +15,7 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
     private BoxCollider boxCollider;
     private float damage;
     private float typeBullet;
+    private Player player;
 
     public PlayerSpell(float typeBullet) {
         super();
@@ -40,6 +41,7 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         if(enemy != null){
             enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
             this.isActive = false;
+
 //            GameObject explosion = new GameObject();
 //            explosion.setPosition(this.getPosition());
 //            GameObject.add(explosion);

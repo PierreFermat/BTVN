@@ -23,6 +23,9 @@ public class Player extends GameObject implements PhysicalBody {
     private int power;
     private int spellQuantity;
     private Balls balls;
+    private Shield shield;
+    private FrameCounter shieldCounter;
+
 
     public Player() {
         super();
@@ -35,6 +38,8 @@ public class Player extends GameObject implements PhysicalBody {
         children.add(boxCollider);
         HP = 500;
         spellQuantity = 1;
+        shieldCounter = new FrameCounter(50);
+
     }
 
     private void creatball(float x, float y) {
@@ -74,6 +79,14 @@ public class Player extends GameObject implements PhysicalBody {
                 spellQuantity += 1;
                 if(spellQuantity >= 4)
                     spellQuantity = 3;
+            }
+        }
+        if(inputManager.sPressed) {
+            if (this.getPower() > 10) {
+                this.setPower(this.getPower() - 10);
+                shield = new Shield(0,0);
+                children.add(shield);
+                shield.setActive(true);
             }
         }
 

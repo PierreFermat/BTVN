@@ -6,6 +6,7 @@ import bases.physics.BoxCollider;
 import bases.physics.Physics;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
+import touhou.inputs.InputManager;
 import touhou.players.Player;
 
 
@@ -14,6 +15,7 @@ public class BallSpell extends GameObject {
     public float typebullet;
     private BoxCollider boxCollider;
     private float damage;
+    private InputManager inputManager;
 
 
     public BallSpell(float typebullet){
@@ -22,13 +24,15 @@ public class BallSpell extends GameObject {
         this.typebullet = typebullet;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
-        damage = 10;
-    }
+        damage = 3;
 
+    }
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         position.addUp(typebullet,SPEED);
         hitEnemy();
+
+
     }
     private void hitEnemy() {
         Enemy enemy = Physics.collideWithEnemy(this.boxCollider);

@@ -10,15 +10,17 @@ import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.enemies.BallSpell;
 import touhou.enemies.EnemyBullet;
+import touhou.inputs.InputManager;
 
 import java.util.Random;
 import java.util.Vector;
 
 public class Balls extends GameObject implements PhysicalBody{
 
-    private static final float SPEED = 2;
     private FrameCounter frameCounter;
     private BoxCollider boxCollider;
+    private InputManager inputManager;
+    private boolean upSpell;
 
     public Balls(float x,float y){
         super();
@@ -31,26 +33,23 @@ public class Balls extends GameObject implements PhysicalBody{
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         shoot();
+
     }
 
 
     private void shoot() {
-        bullet_0();
+
+            bullet_1();
     }
-//    private void bullet_1(){
-//        if(frameCounter.run()) {
-//            CreatBullet(1,10, 2);
-//            CreatBullet(1,10,0);
-//            CreatBullet(1,10, -2);
-//            frameCounter.reset();
-//        }
-//    }
-    private void bullet_0(){
+
+    private void bullet_1() {
         if(frameCounter.run()) {
             CreatBullet(1,10,0);
             frameCounter.reset();
         }
     }
+
+
 
     private void CreatBullet(float x,float y, float typebullet) {
         BallSpell newBullet = new BallSpell(typebullet);
