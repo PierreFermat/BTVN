@@ -15,7 +15,7 @@ import touhou.inputs.InputManager;
 
 public class Shield extends GameObject implements PhysicalBody {
     private BoxCollider boxCollider;
-    private static float HP = 500;
+    private static float HP = 300;
     private final static float  damage = 50;
     private InputManager inputManager;
 
@@ -42,6 +42,9 @@ public class Shield extends GameObject implements PhysicalBody {
         super.run(parentPosition);
         hitEnemy();
         hitBullet();
+        if(this.getHP()<=0){
+            this.isActive = false;
+        }
 
 
     }
