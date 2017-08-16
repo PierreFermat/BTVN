@@ -38,12 +38,12 @@ public class Enemy extends GameObject implements PhysicalBody {
             setEnemyHP(10);
         }
         if(typeEnemy == 3){
-            renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png")) ;
-            setEnemyHP(10);
+            renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/black/0.png")) ;
+            setEnemyHP(40);
         }
         if(typeEnemy == 1){
             renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/pink/0.png")) ;
-            setEnemyHP(30);
+            setEnemyHP(20);
         }
     }
 
@@ -70,9 +70,27 @@ public class Enemy extends GameObject implements PhysicalBody {
         if(typeEnemy == 1){
             bullet_1();
         }
+        if(typeEnemy == 2){
+            bullet_0();
+        }
+        if(typeEnemy == 3){
+            bullet_2();
+        }
 
 
     }
+
+    private void bullet_2() {
+        if(frameCounter.run()) {
+            CreatBullet(1,10, 2);
+            CreatBullet(1,10,0);
+            CreatBullet(1,10, -2);
+            CreatBullet(1,10, 4);
+            CreatBullet(1,10, -4);
+            frameCounter.reset();
+        }
+    }
+
     private void bullet_1(){
         if(frameCounter.run()) {
             CreatBullet(1,10, 2);

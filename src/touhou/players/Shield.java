@@ -25,7 +25,7 @@ public class Shield extends GameObject implements PhysicalBody {
         boxCollider = new BoxCollider(100,100);
         children.add(boxCollider);
         renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/Shield/rasengan.png")) ;
-        HP = 500;
+        HP = 200;
 
     }
 
@@ -62,7 +62,7 @@ public class Shield extends GameObject implements PhysicalBody {
         Enemy enemy = Physics.collideWithEnemy(this.boxCollider);
         if(enemy != null){
             enemy.setActive(false);
-            this.setHP(this.getHP()-100);
+            this.setHP(this.getHP()-200);
 
         }
     }
