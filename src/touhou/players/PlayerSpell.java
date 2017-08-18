@@ -5,6 +5,7 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.enemies.Enemy;
@@ -21,7 +22,10 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         super();
         this.typeBullet = typeBullet;
         damage = 5;
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/player-spells/a/1.png"));
+        renderer = new Animation(SpriteUtils.loadImage("assets/images/player-spells/a/0.png"),
+                SpriteUtils.loadImage("assets/images/player-spells/a/1.png"),
+                SpriteUtils.loadImage("assets/images/player-spells/a/2.png"),
+                SpriteUtils.loadImage("assets/images/player-spells/a/3.png")) ;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
     }
@@ -37,7 +41,7 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
     }
 
     private void hitEnemy() {
-        Enemy enemy = Physics.collideWithEnemy(this.boxCollider);
+        Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
         if(enemy != null){
             enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
             this.isActive = false;

@@ -59,7 +59,7 @@ public class Shield extends GameObject implements PhysicalBody {
     }
 
     private void hitEnemy() {
-        Enemy enemy = Physics.collideWithEnemy(this.boxCollider);
+        Enemy enemy = Physics.collideWith(this.boxCollider,Enemy.class);
         if(enemy != null){
             enemy.setActive(false);
             this.setHP(this.getHP()-200);
@@ -67,7 +67,7 @@ public class Shield extends GameObject implements PhysicalBody {
         }
     }
     private void hitBullet(){
-        EnemyBullet enemyBullet = Physics.collideWithEnemyBullet(this.boxCollider);
+        EnemyBullet enemyBullet = Physics.collideWith(this.boxCollider, EnemyBullet.class);
         if(enemyBullet != null){
             enemyBullet.setActive(false);
             this.setHP(this.getHP() - 50);

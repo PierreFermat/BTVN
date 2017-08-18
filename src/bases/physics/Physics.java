@@ -7,41 +7,22 @@ import touhou.players.Player;
 import java.util.Vector;
 
 public class Physics {
-    private static Vector<PhysicalBody> bodies = new Vector<>();
+    private static Vector<PhysicalBody> bodies = new Vector<>();// Generics
 
-    public static Enemy collideWithEnemy(BoxCollider boxCollider) {
-        for(PhysicalBody body : bodies){
-            if(body.isActive()){   if(body instanceof Enemy && body.getBoxCollider().intersects(boxCollider)) {
-                return (Enemy) body;
+    public static <T extends PhysicalBody> T collideWith(BoxCollider boxCollider, Class<T> classz){
+        for(PhysicalBody body : bodies) {
+            if (body.isActive()) {
+                if (body.getClass().equals(classz) && body.getBoxCollider().intersects(boxCollider)) {
+                    return (T) body;
                 }
             }
         }
+
         return null;
     }
 
     public static void add(PhysicalBody body) {
         bodies.add(body);
     }
-
-    public static Player collideWithPlayer(BoxCollider boxCollider) {
-        for(PhysicalBody body : bodies){
-            if(body.isActive()) {
-                if (body instanceof Player && body.getBoxCollider().intersects(boxCollider)) {
-                    return (Player) body;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static EnemyBullet collideWithEnemyBullet(BoxCollider boxCollider) {
-        for(PhysicalBody body : bodies){
-            if(body.isActive()) {
-                if (body instanceof EnemyBullet && body.getBoxCollider().intersects(boxCollider)) {
-                    return (EnemyBullet) body;
-                }
-            }
-        }
-        return null;
-    }
 }
+

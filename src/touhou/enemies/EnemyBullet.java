@@ -3,6 +3,7 @@ package touhou.enemies;
 import bases.GameObject;
 import bases.Vector2D;
 import bases.physics.BoxCollider;
+import bases.physics.PhysicalBody;
 import bases.physics.Physics;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
@@ -11,7 +12,7 @@ import touhou.players.Player;
 
 import java.util.ArrayList;
 
-public class EnemyBullet extends GameObject {
+public class EnemyBullet extends GameObject implements PhysicalBody {
     private static final float SPEED = 5;
     public float typebullet;
     private BoxCollider boxCollider;
@@ -33,7 +34,7 @@ public class EnemyBullet extends GameObject {
         hitPlayer();
     }
     private void hitPlayer() {
-        Player player = Physics.collideWithPlayer(this.boxCollider);
+        Player player = Physics.collideWith(this.boxCollider, Player.class);
         if(player != null){
             player.setHP(player.getHP() - this.damage);
             this.isActive = false;
@@ -48,5 +49,10 @@ public class EnemyBullet extends GameObject {
 
     public BoxCollider getBoxCollider() {
         return this.boxCollider;
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 }

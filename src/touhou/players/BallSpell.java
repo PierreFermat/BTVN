@@ -4,6 +4,7 @@ import bases.GameObject;
 import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.Physics;
+import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.inputs.InputManager;
@@ -20,7 +21,10 @@ public class BallSpell extends GameObject {
 
     public BallSpell(float typebullet){
         super();
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/sphere-bullets/0.png"));
+        this.renderer = new Animation(SpriteUtils.loadImage("assets/images/sphere-bullets/0.png"),
+                SpriteUtils.loadImage("assets/images/sphere-bullets/1.png"),
+                SpriteUtils.loadImage("assets/images/sphere-bullets/2.png"),
+                SpriteUtils.loadImage("assets/images/sphere-bullets/3.png"));
         this.typebullet = typebullet;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
@@ -35,7 +39,7 @@ public class BallSpell extends GameObject {
 
     }
     private void hitEnemy() {
-        Enemy enemy = Physics.collideWithEnemy(this.boxCollider);
+        Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
         if(enemy != null){
             enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
             this.isActive = false;

@@ -6,6 +6,7 @@ import bases.GameObject;
 import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
+import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.enemies.Enemy;
@@ -30,7 +31,13 @@ public class Player extends GameObject implements PhysicalBody {
     public Player() {
         super();
         this.spellLock = false;
-        renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
+        renderer = new Animation(SpriteUtils.loadImage("assets/images/players/straight/0.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/1.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/2.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/3.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/4.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/5.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/6.png"));
         coolDownCounter = new FrameCounter(5);
         boxCollider = new BoxCollider(20,20);
         creatball(-20,0);

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 /**
  * Created by huynq on 8/5/17.
  */
-public class ImageRenderer {
+public class ImageRenderer implements Renderer {
     public BufferedImage image;
 
     public ImageRenderer(BufferedImage image) {
