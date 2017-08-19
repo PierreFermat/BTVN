@@ -19,7 +19,7 @@ public class EnemySpawner extends GameObject {
         if(spawnCounter.run()){
             spawnCounter.reset();
             enemy.getPosition().set(random.nextInt(384),40);
-           GameObject.add(enemy);
+            GameObject.add(enemy);
         }
     }
 }

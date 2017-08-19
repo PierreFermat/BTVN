@@ -39,7 +39,7 @@ public class Player extends GameObject implements PhysicalBody {
                 SpriteUtils.loadImage("assets/images/players/straight/4.png"),
                 SpriteUtils.loadImage("assets/images/players/straight/5.png"),
                 SpriteUtils.loadImage("assets/images/players/straight/6.png"));
-        coolDownCounter = new FrameCounter(3);
+        coolDownCounter = new FrameCounter(6);
         boxCollider = new BoxCollider(20,20);
         creatrightball();
         creatleftball();
@@ -92,6 +92,7 @@ public class Player extends GameObject implements PhysicalBody {
                 spellQuantity += 1;
                 if(spellQuantity >= 4)
                     spellQuantity = 3;
+                    this.setPower(this.getPower()+ 30);
             }
         }
         if(inputManager.sPressed) {
@@ -109,8 +110,10 @@ public class Player extends GameObject implements PhysicalBody {
                 break;
             case 2:
                 castSpell_2();
+                break;
             case 3:
                 castSpell_3();
+                break;
         }
 
 

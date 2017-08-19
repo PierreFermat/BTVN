@@ -5,10 +5,12 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 //import touhou.explosion.Explosion;
+import touhou.explosion.Explosion;
 import touhou.players.Player;
 
 import java.util.ArrayList;
@@ -58,9 +60,9 @@ public class EnemyBullet extends GameObject implements PhysicalBody {
         if(player != null){
             player.setHP(player.getHP() - this.damage);
             this.isActive = false;
-//            GameObject explosion = new GameObject();
-//            explosion.setPosition(this.getPosition());
-//            GameObject.add(explosion);
+            Explosion explosion = GameObjectPools.recycle(Explosion.class);
+            explosion.getPosition().set(player.getScreenPosition());
+            explosion.getAnimation().setOff(false);
 
         }
     }

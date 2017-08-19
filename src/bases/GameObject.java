@@ -57,6 +57,22 @@ public class GameObject {
         children = new ArrayList<>();
         isActive = true;
     }
+    public static <T extends GameObject> T MinimumDistance(Vector2D position, Class<T> classz){
+        float minDis = 1000000000, t;
+        T result = null;
+        for (GameObject gameObject : gameObjects){
+            if (gameObject.getActive()){
+                if (gameObject.getClass().equals(classz)) {
+                    t = gameObject.getScreenPosition().distance(position);
+                    if (t < minDis) {
+                        minDis = t;
+                        result = (T) gameObject;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     public void run(Vector2D parentPosition){
         screenPosition = parentPosition.add(position);
@@ -64,8 +80,6 @@ public class GameObject {
             if(child.isActive)
                 child.run(screenPosition);
         }
-        System.out.println(gameObjects.size());
-
     }
 
     public void render(Graphics2D g2d){
@@ -96,4 +110,7 @@ public class GameObject {
     }
 
 
+    public Vector2D getScreenPosition() {
+        return screenPosition;
+    }
 }

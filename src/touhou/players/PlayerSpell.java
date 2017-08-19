@@ -5,10 +5,12 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.enemies.Enemy;
+import touhou.explosion.Explosion;
 
 
 public class PlayerSpell extends GameObject implements PhysicalBody {
@@ -22,10 +24,8 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         super();
         this.typeBullet = 0;
         damage = 10;
-        renderer = new Animation(SpriteUtils.loadImage("assets/images/player-spells/a/0.png"),
-                SpriteUtils.loadImage("assets/images/player-spells/a/1.png"),
-                SpriteUtils.loadImage("assets/images/player-spells/a/2.png"),
-                SpriteUtils.loadImage("assets/images/player-spells/a/3.png")) ;
+        renderer = new Animation(1, SpriteUtils.loadImage("assets/images/player-spells/a/1.png")
+                ) ;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
     }
@@ -55,12 +55,10 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
         if(enemy != null){
             enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
+            Explosion explosion = GameObjectPools.recycle(Explosion.class);
+            explosion.getPosition().set(enemy.getScreenPosition());
+            explosion.getAnimation().setOff(false);
             this.isActive = false;
-
-//            GameObject explosion = new GameObject();
-//            explosion.setPosition(this.getPosition());
-//            GameObject.add(explosion);
-
         }
     }
 

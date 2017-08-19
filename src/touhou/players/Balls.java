@@ -10,7 +10,7 @@ import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
-import touhou.enemies.BallSpell;
+import touhou.players.BallSpell;
 import touhou.enemies.EnemyBullet;
 import touhou.inputs.InputManager;
 
@@ -28,7 +28,7 @@ public class Balls extends GameObject implements PhysicalBody{
     public Balls(float x,float y){
         super();
         this.position.set(x,y);
-        frameCounter = new FrameCounter(20);
+        frameCounter = new FrameCounter(30);
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
         this.animation = new Animation(
@@ -37,36 +37,15 @@ public class Balls extends GameObject implements PhysicalBody{
                 SpriteUtils.loadImage("assets/images/sphere/2.png"),
                 SpriteUtils.loadImage("assets/images/sphere/3.png")) ;
         this.renderer = animation;
+        CreatBullet();
     }
     public void setReverse(boolean reverse){
         this.animation.setReverse(reverse);
     }
 
-    public void run(Vector2D parentPosition){
-        super.run(parentPosition);
-        shoot();
-
-    }
-
-
-    private void shoot() {
-
-            bullet_1();
-    }
-
-    private void bullet_1() {
-        if(frameCounter.run()) {
-            CreatBullet(1,10,0);
-            frameCounter.reset();
-        }
-    }
-
-
-
-    private void CreatBullet(float x,float y, float typebullet) {
-        BallSpell newBullet = GameObjectPools.recycle(BallSpell.class);
-        newBullet.setTypebullet(typebullet);
-        newBullet.getPosition().set(this.screenPosition.add(x, y));
+    private void CreatBullet() {
+        BulletSpawners spellSpawner = new BulletSpawners();
+        children.add(spellSpawner);
     }
 
     @Override

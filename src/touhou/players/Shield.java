@@ -6,11 +6,13 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.pools.GameObjectPools;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
-import touhou.enemies.BallSpell;
+import touhou.players.BallSpell;
 import touhou.enemies.Enemy;
 import touhou.enemies.EnemyBullet;
+import touhou.explosion.Explosion;
 import touhou.inputs.InputManager;
 
 public class Shield extends GameObject implements PhysicalBody {

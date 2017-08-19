@@ -1,5 +1,7 @@
 package bases;
 
+import static java.lang.Math.sqrt;
+
 /**
  * Created by huynq on 8/2/17.
  */
@@ -63,8 +65,13 @@ public class Vector2D {
         return new Vector2D(this.x * f, this.y * f);
     }
 
+    public void multiplyBy(float x, float y){
+        this.x *= x;
+        this.y *= y;
+    }
+
     public float magnitude() {
-        return (float)Math.sqrt(this.x * this.x + this.y * this.y);
+        return (float) sqrt(this.x * this.x + this.y * this.y);
     }
 
     public Vector2D normalize() {
@@ -86,5 +93,8 @@ public class Vector2D {
     }
     public Vector2D subtract(Vector2D vector2D){
         return new Vector2D(x- vector2D.x,y - vector2D.y);
+    }
+    public float distance(Vector2D vector2D){
+        return (this.subtract(vector2D).magnitude());
     }
 }
