@@ -2,6 +2,7 @@ package touhou.enemies;
 
 import bases.FrameCounter;
 import bases.GameObject;
+import bases.pools.GameObjectPools;
 
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class EnemySpawner extends GameObject {
         if(spawnCounter.run()){
             spawnCounter.reset();
             enemy.getPosition().set(random.nextInt(384),40);
-            GameObject.add(enemy);
+           GameObject.add(enemy);
         }
     }
 }

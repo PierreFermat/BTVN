@@ -19,8 +19,9 @@ public class BallSpell extends GameObject {
     private InputManager inputManager;
 
 
-    public BallSpell(float typebullet){
+    public BallSpell(){
         super();
+        this.typebullet = 0;
         this.renderer = new Animation(SpriteUtils.loadImage("assets/images/sphere-bullets/0.png"),
                 SpriteUtils.loadImage("assets/images/sphere-bullets/1.png"),
                 SpriteUtils.loadImage("assets/images/sphere-bullets/2.png"),
@@ -28,15 +29,24 @@ public class BallSpell extends GameObject {
         this.typebullet = typebullet;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
-        damage = 3;
+        damage = 5;
 
     }
+
+    public void setTypebullet(float typebullet) {
+        this.typebullet = typebullet;
+    }
+
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         position.addUp(typebullet,SPEED);
         hitEnemy();
-
-
+        deActive();
+    }
+    private void deActive() {
+        if(this.screenPosition.y < 0){
+            this.isActive = false;
+        }
     }
     private void hitEnemy() {
         Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);

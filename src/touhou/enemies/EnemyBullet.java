@@ -19,8 +19,9 @@ public class EnemyBullet extends GameObject implements PhysicalBody {
     private float damage;
 
 
-    public EnemyBullet(float typebullet){
+    public EnemyBullet(){
         super();
+        this.typebullet = 0;
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
         this.typebullet = typebullet;
         boxCollider = new BoxCollider(20,20);
@@ -28,10 +29,20 @@ public class EnemyBullet extends GameObject implements PhysicalBody {
         damage = 10;
     }
 
+    public void setTypebullet(float typebullet) {
+        this.typebullet = typebullet;
+    }
+
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         position.addUp(typebullet,SPEED);
         hitPlayer();
+        deActive();
+    }
+    private void deActive() {
+        if(this.screenPosition.y >768){
+            this.isActive = false;
+        }
     }
     private void hitPlayer() {
         Player player = Physics.collideWith(this.boxCollider, Player.class);

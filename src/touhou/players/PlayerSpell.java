@@ -18,16 +18,20 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
     private float typeBullet;
     private Player player;
 
-    public PlayerSpell(float typeBullet) {
+    public PlayerSpell() {
         super();
-        this.typeBullet = typeBullet;
-        damage = 5;
+        this.typeBullet = 0;
+        damage = 10;
         renderer = new Animation(SpriteUtils.loadImage("assets/images/player-spells/a/0.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/1.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/2.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/3.png")) ;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
+    }
+
+    public void setTypeBullet(float typeBullet) {
+        this.typeBullet = typeBullet;
     }
 
     public float getDamage() {
@@ -38,6 +42,13 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         super.run(parentPosition);
         position.addUp(typeBullet, SPEED);
         hitEnemy();
+        deActive();
+    }
+
+    private void deActive() {
+        if(this.screenPosition.y < 0){
+            this.isActive = false;
+        }
     }
 
     private void hitEnemy() {

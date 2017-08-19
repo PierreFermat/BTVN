@@ -6,6 +6,7 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
@@ -35,21 +36,21 @@ public class Enemy extends GameObject implements PhysicalBody {
                     SpriteUtils.loadImage("assets/images/enemies/level0/blue/1.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/blue/2.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/blue/3.png")) ;
-            setEnemyHP(10);
+            setEnemyHP(20);
         }
         if(typeEnemy == 2){
             renderer = new Animation(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/blue/1.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/blue/2.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/blue/3.png")) ;
-            setEnemyHP(10);
+            setEnemyHP(20);
         }
         if(typeEnemy == 1){
             renderer = new Animation(SpriteUtils.loadImage("assets/images/enemies/level0/pink/0.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/pink/1.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/pink/2.png"),
                     SpriteUtils.loadImage("assets/images/enemies/level0/pink/3.png")) ;
-            setEnemyHP(20);
+            setEnemyHP(100);
         }
     }
 
@@ -99,9 +100,9 @@ public class Enemy extends GameObject implements PhysicalBody {
         }
     }
     private void CreatBullet(float x,float y, float typebullet) {
-        EnemyBullet newBullet = new EnemyBullet(typebullet);
+        EnemyBullet newBullet = GameObjectPools.recycle(EnemyBullet.class);
+        newBullet.setTypebullet(typebullet);
         newBullet.getPosition().set(this.position.add(x, y));
-        GameObject.add(newBullet);
     }
 
     private void fly() {

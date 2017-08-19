@@ -1,3 +1,4 @@
+import bases.GameObject;
 import touhou.GameWindow;
 
 /**

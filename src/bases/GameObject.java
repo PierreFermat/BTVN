@@ -39,10 +39,6 @@ public class GameObject {
                 gameObject.render(g2d);
         }
     }
-    public boolean IsActive(){
-        return isActive;
-    }
-
     public void setActive(boolean active) {
         isActive = active;
     }
@@ -68,6 +64,7 @@ public class GameObject {
             if(child.isActive)
                 child.run(screenPosition);
         }
+        System.out.println(gameObjects.size());
 
     }
 

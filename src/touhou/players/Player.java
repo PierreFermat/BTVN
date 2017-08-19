@@ -6,6 +6,7 @@ import bases.GameObject;
 import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
+import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
@@ -38,7 +39,7 @@ public class Player extends GameObject implements PhysicalBody {
                 SpriteUtils.loadImage("assets/images/players/straight/4.png"),
                 SpriteUtils.loadImage("assets/images/players/straight/5.png"),
                 SpriteUtils.loadImage("assets/images/players/straight/6.png"));
-        coolDownCounter = new FrameCounter(5);
+        coolDownCounter = new FrameCounter(3);
         boxCollider = new BoxCollider(20,20);
         creatball(-20,0);
         creatball(20,0);
@@ -114,9 +115,9 @@ public class Player extends GameObject implements PhysicalBody {
     }
 
     private void creatSpell(float x,float y,float typebullet) {
-        PlayerSpell newSpell = new PlayerSpell(typebullet);
+        PlayerSpell newSpell = GameObjectPools.recycle(PlayerSpell.class);
+        newSpell.setTypeBullet(typebullet);
         newSpell.getPosition().set(this.position.add(x, y));
-        GameObject.add(newSpell);
     }
     private void castSpell_1(){
         if (inputManager.xPressed && !spellLock) {

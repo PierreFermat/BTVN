@@ -6,6 +6,7 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.pools.GameObjectPools;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.enemies.BallSpell;
@@ -52,9 +53,9 @@ public class Balls extends GameObject implements PhysicalBody{
 
 
     private void CreatBullet(float x,float y, float typebullet) {
-        BallSpell newBullet = new BallSpell(typebullet);
+        BallSpell newBullet = GameObjectPools.recycle(BallSpell.class);
+        newBullet.setTypebullet(typebullet);
         newBullet.getPosition().set(this.screenPosition.add(x, y));
-        GameObject.add(newBullet);
     }
 
     @Override
