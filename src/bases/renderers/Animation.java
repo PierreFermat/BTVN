@@ -14,28 +14,39 @@ public class Animation implements Renderer {
     private FrameCounter frameCounter;
     private int currentImageIndex;
     private boolean reverse;
+    private boolean ended;
 
-    public  Animation(int frameDelay,boolean reverse, BufferedImage... images){
+    public Animation(int frameDelay, BufferedImage... images) {
         this.images = Arrays.asList(images);
         this.frameCounter = new FrameCounter(frameDelay);
+        this.reverse = false;
         this.currentImageIndex = 0;
-        this.reverse = reverse;
-    }
-    public Animation(BufferedImage... images){
-        this(12,false,images);
+        this.ended = false;
     }
 
+    public Animation(BufferedImage... images) {
+        this(12, images);
+    }
 
     @Override
     public void render(Graphics2D g2d, Vector2D position) {
         BufferedImage image = images.get(currentImageIndex);
-        Vector2D renderPosition = position.subtract(image.getWidth()/2, image.getHeight()/2);
-        g2d.drawImage(image,(int)renderPosition.x,(int)renderPosition.y,null );
-        updateCurrentImage();
-    }
+        Vector2D renderPosition = position.subtract(
+                image.getWidth() / 2,
+                image.getHeight() / 2
+        );
 
-    public void updateCurrentImage(){
-        if(frameCounter.run()) {
+        g2d.drawImage(image, (int)renderPosition.x, (int)renderPosition.y, null);
+
+//        if (((reverse && currentImageIndex == images.size() - 1) || ((!reverse) && (currentImageIndex == 0))) &&
+//                (frameCounter.getCount() == 0)){
+//            ended = true;
+//        }
+        if (((reverse && currentImageIndex == 1) || ((!reverse) && currentImageIndex == images.size() - 1)) &&
+                (frameCounter.getCount() == frameCounter.getCountMax())) {
+            ended = true;
+        }
+        if (frameCounter.run()) {
             frameCounter.reset();
             if (!reverse) {
                 currentImageIndex++;
@@ -43,19 +54,25 @@ public class Animation implements Renderer {
                     currentImageIndex = 0;
                 }
             }
-            else {
-                currentImageIndex --;
-                if(currentImageIndex < 0){
-                    currentImageIndex = images.size();
+            else{
+                currentImageIndex--;
+                if (currentImageIndex < 0){
+                    currentImageIndex = images.size() - 1;
                 }
-
             }
-
         }
     }
 
     public void setReverse(boolean reverse) {
         this.reverse = reverse;
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
     }
 }
 

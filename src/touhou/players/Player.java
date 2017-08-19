@@ -41,8 +41,8 @@ public class Player extends GameObject implements PhysicalBody {
                 SpriteUtils.loadImage("assets/images/players/straight/6.png"));
         coolDownCounter = new FrameCounter(3);
         boxCollider = new BoxCollider(20,20);
-        creatball(-20,0);
-        creatball(20,0);
+        creatrightball();
+        creatleftball();
         children.add(boxCollider);
         HP = 500;
         spellQuantity = 1;
@@ -50,8 +50,13 @@ public class Player extends GameObject implements PhysicalBody {
 
     }
 
-    private void creatball(float x, float y) {
-        balls = new Balls(x,y);
+    private void creatrightball() {
+        balls = new Balls(20,0);
+        balls.setReverse(true);
+        children.add(balls);
+    }
+    private void creatleftball(){
+        balls = new Balls(-20,0);
         children.add(balls);
     }
 

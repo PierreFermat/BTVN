@@ -12,11 +12,20 @@ public class FrameCounter {
         this.count = 0;
     }
 
+
     public boolean run() {
         if (count >= countMax)
             return true;
         count++;
         return false;
+    }
+
+    public int getCountMax() {
+        return countMax;
+    }
+
+    public void setCountMax(int countMax) {
+        this.countMax = countMax;
     }
 
     public void reset() {

@@ -7,6 +7,7 @@ import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
 import bases.pools.GameObjectPools;
+import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 import touhou.enemies.BallSpell;
@@ -22,6 +23,7 @@ public class Balls extends GameObject implements PhysicalBody{
     private BoxCollider boxCollider;
     private InputManager inputManager;
     private boolean upSpell;
+    private Animation animation;
 
     public Balls(float x,float y){
         super();
@@ -29,8 +31,17 @@ public class Balls extends GameObject implements PhysicalBody{
         frameCounter = new FrameCounter(20);
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
-        renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/sphere/0.png")) ;
+        this.animation = new Animation(
+                SpriteUtils.loadImage("assets/images/sphere/0.png"),
+                SpriteUtils.loadImage("assets/images/sphere/1.png"),
+                SpriteUtils.loadImage("assets/images/sphere/2.png"),
+                SpriteUtils.loadImage("assets/images/sphere/3.png")) ;
+        this.renderer = animation;
     }
+    public void setReverse(boolean reverse){
+        this.animation.setReverse(reverse);
+    }
+
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         shoot();
