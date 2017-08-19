@@ -5,6 +5,7 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicalBody;
 import bases.physics.Physics;
+import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 //import touhou.explosion.Explosion;
@@ -22,7 +23,15 @@ public class EnemyBullet extends GameObject implements PhysicalBody {
     public EnemyBullet(){
         super();
         this.typebullet = 0;
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
+        this.renderer = new Animation(
+                SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"),
+                SpriteUtils.loadImage("assets/images/enemies/bullets/cyan.png"),
+                SpriteUtils.loadImage("assets/images/enemies/bullets/green.png"),
+                SpriteUtils.loadImage("assets/images/enemies/bullets/pink.png"),
+                SpriteUtils.loadImage("assets/images/enemies/bullets/red.png"),
+                SpriteUtils.loadImage("assets/images/enemies/bullets/white.png"),
+                SpriteUtils.loadImage("assets/images/enemies/bullets/yellow.png")
+        );
         this.typebullet = typebullet;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
