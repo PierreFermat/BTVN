@@ -24,7 +24,8 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         super();
         this.typeBullet = 0;
         damage = 10;
-        renderer = new Animation(1, SpriteUtils.loadImage("assets/images/player-spells/a/1.png")
+        renderer = new Animation(1,false,false,
+                SpriteUtils.loadImage("assets/images/player-spells/a/1.png")
                 ) ;
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
@@ -55,9 +56,7 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
         if(enemy != null){
             enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
-            Explosion explosion = GameObjectPools.recycle(Explosion.class);
-            explosion.getPosition().set(enemy.getScreenPosition());
-            explosion.getAnimation().setOff(false);
+            enemy.getHit();
             this.isActive = false;
         }
     }

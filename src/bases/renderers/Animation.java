@@ -14,61 +14,75 @@ public class Animation implements Renderer {
     private FrameCounter frameCounter;
     private int currentImageIndex;
     private boolean reverse;
-    private boolean off;
+    private boolean oneTime;
+    private boolean stop;
 
-    public Animation(int frameDelay, BufferedImage... images) {
+    public Animation(int frameDelay, boolean oneTime, boolean reserve, BufferedImage... images) {
         this.images = Arrays.asList(images);
         this.frameCounter = new FrameCounter(frameDelay);
-        this.reverse = false;
         this.currentImageIndex = 0;
-        this.off = false;
+        this.oneTime = oneTime;
+        this.reverse = reserve;
     }
 
     public Animation(BufferedImage... images) {
-        this(12, images);
+        this(12, false, false, images);
     }
 
     @Override
     public void render(Graphics2D g2d, Vector2D position) {
-        BufferedImage image = images.get(currentImageIndex);
-        Vector2D renderPosition = position.subtract(
-                image.getWidth() / 2,
-                image.getHeight() / 2
-        );
+        if (!stop) {
+            BufferedImage image = images.get(currentImageIndex);
+            Vector2D renderPosition = position.subtract(
+                    image.getWidth() / 2,
+                    image.getHeight() / 2
+            );
 
-        g2d.drawImage(image, (int)renderPosition.x, (int)renderPosition.y, null);
+            g2d.drawImage(image, (int) renderPosition.x, (int) renderPosition.y, null);
+        }
 
-        if (((reverse && currentImageIndex == 1) || ((!reverse) && currentImageIndex == images.size() - 1)) &&
-                (frameCounter.getCount() == frameCounter.getCountMax())) {
-            off = true;
-        }
-        if (frameCounter.run()) {
-            frameCounter.reset();
-            if (!reverse) {
-                currentImageIndex++;
-                if (currentImageIndex >= images.size()) {
-                    currentImageIndex = 0;
-                }
-            }
-            else{
-                currentImageIndex--;
-                if (currentImageIndex < 0){
-                    currentImageIndex = images.size() - 1;
-                }
-            }
-        }
+        updateCurrentImage();
     }
 
     public void setReverse(boolean reverse) {
         this.reverse = reverse;
     }
 
-    public boolean GetOff() {
-        return off;
+    public boolean isStop() {
+        return stop;
     }
 
-    public void setOff(boolean ended) {
-        this.off = ended;
+    public void reset() {
+        stop = false;
+        currentImageIndex = 0;
+    }
+
+    private void updateCurrentImage() {
+        if (frameCounter.run()) {
+            frameCounter.reset();
+            if (!reverse) {
+                currentImageIndex++;
+                if (currentImageIndex >= images.size()) {
+                    // Out of range
+                    if (!oneTime) {
+                        // Repeat animation
+                        currentImageIndex = 0;
+                    } else {
+                        stop = true;
+                    }
+                }
+            } else {
+                currentImageIndex--;
+                if (currentImageIndex < 0) {
+                    // Out of range
+                    if (!oneTime) {
+                        // Repeat animation
+                        currentImageIndex = images.size() - 1;
+                    } else {
+                        stop = true;
+                    }
+                }
+            }
+        }
     }
 }
-

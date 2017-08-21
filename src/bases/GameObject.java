@@ -18,6 +18,7 @@ public class GameObject {
 
     protected static Vector<GameObject> gameObjects = new Vector<>();
     private static Vector<GameObject> newGameObjects = new Vector<>();
+    private boolean isRenewing;
 
     public static void runAll(){
         for(GameObject gameObject : gameObjects){
@@ -80,6 +81,7 @@ public class GameObject {
             if(child.isActive)
                 child.run(screenPosition);
         }
+        isRenewing = false;
     }
 
     public void render(Graphics2D g2d){
@@ -112,5 +114,10 @@ public class GameObject {
 
     public Vector2D getScreenPosition() {
         return screenPosition;
+    }
+    public void reset(){
+        isActive = true;
+        this.screenPosition.set(-99,-99);
+        this.isRenewing = true;
     }
 }

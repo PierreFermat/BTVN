@@ -10,6 +10,7 @@ import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
+import touhou.explosion.Explosion;
 import touhou.players.Player;
 
 import java.util.Random;
@@ -132,6 +133,12 @@ public class Enemy extends GameObject implements PhysicalBody {
             player.setHP(player.getHP() - this.damage);
             this.isActive = false;
         }
+    }
+    public void  getHit(){
+        Explosion explosion = new Explosion();
+        explosion.getPosition().set(this.position);
+        explosion.getPosition().set(this.screenPosition);
+        GameObject.add(explosion);
     }
 
 }

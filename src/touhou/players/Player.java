@@ -27,18 +27,15 @@ public class Player extends GameObject implements PhysicalBody {
     private Balls balls;
     private Shield shield;
     private FrameCounter shieldCounter;
+    private Vector2D velocity;
+    private PlayerAnimator animator;
 
 
     public Player() {
         super();
         this.spellLock = false;
-        renderer = new Animation(SpriteUtils.loadImage("assets/images/players/straight/0.png"),
-                SpriteUtils.loadImage("assets/images/players/straight/1.png"),
-                SpriteUtils.loadImage("assets/images/players/straight/2.png"),
-                SpriteUtils.loadImage("assets/images/players/straight/3.png"),
-                SpriteUtils.loadImage("assets/images/players/straight/4.png"),
-                SpriteUtils.loadImage("assets/images/players/straight/5.png"),
-                SpriteUtils.loadImage("assets/images/players/straight/6.png"));
+        animator = new PlayerAnimator();
+        this.renderer = animator;
         coolDownCounter = new FrameCounter(6);
         boxCollider = new BoxCollider(20,20);
         creatrightball();
@@ -47,6 +44,8 @@ public class Player extends GameObject implements PhysicalBody {
         HP = 500;
         spellQuantity = 1;
         shieldCounter = new FrameCounter(50);
+        velocity = new Vector2D();
+
 
     }
 
@@ -74,14 +73,17 @@ public class Player extends GameObject implements PhysicalBody {
 
     public void run(Vector2D parentPosition) {
         super.run(parentPosition);
+        velocity.set(0,0);
         if (inputManager.upPressed)
-            position.addUp(0, -SPEED);
+            velocity.y = -SPEED;
         if (inputManager.downPressed)
-            position.addUp(0, SPEED);
+            velocity.y = SPEED;
         if (inputManager.leftPressed)
-            position.addUp(-SPEED, 0);
+            velocity.x = -SPEED;
         if (inputManager.rightPressed)
-            position.addUp(SPEED, 0);
+            velocity.x = SPEED;
+        position.addUp(velocity);
+        animator.Update(this);
 
         if (constraints != null) {
             constraints.make(position);
@@ -115,8 +117,6 @@ public class Player extends GameObject implements PhysicalBody {
                 castSpell_3();
                 break;
         }
-
-
         if (this.getHP()<=0) {
             this.setActive(false);
         }
@@ -192,5 +192,9 @@ public class Player extends GameObject implements PhysicalBody {
         return "Player{" +
                 "HP=" + HP +
                 '}';
+    }
+
+    public Vector2D getVelocity() {
+        return velocity;
     }
 }

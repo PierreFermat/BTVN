@@ -60,9 +60,6 @@ public class EnemyBullet extends GameObject implements PhysicalBody {
         if(player != null){
             player.setHP(player.getHP() - this.damage);
             this.isActive = false;
-            Explosion explosion = GameObjectPools.recycle(Explosion.class);
-            explosion.getPosition().set(player.getScreenPosition());
-            explosion.getAnimation().setOff(false);
 
         }
     }

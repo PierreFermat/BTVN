@@ -14,7 +14,7 @@ public class BulletSpawners extends GameObject {
 
     public BulletSpawners() {
         super();
-        spawnCounter = new FrameCounter(10);
+        spawnCounter = new FrameCounter(80);
     }
 
     @Override

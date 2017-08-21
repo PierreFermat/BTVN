@@ -135,19 +135,18 @@ public class GameWindow extends Frame {
         Font font = new Font("Serif", Font.ITALIC, 21);
         backbufferGraphics.setFont(font);
         backbufferGraphics.setColor(Color.white);
-        backbufferGraphics.drawString("Your blood :   " + Float.toString(player.getHP()), 400, 90);
-        if (player.getHP() <= 0){
-            Font nfont = new Font("Serif", Font.ITALIC, 80);
-            backbufferGraphics.setFont(nfont);
-            backbufferGraphics.setColor(Color.white);
-            backbufferGraphics.drawString("GAME OVER", 100, 200);
-            //Thread.sleep(4000);
-            //System.exit(0);
-        }
-        Font pfont = new Font("Serif", Font.ITALIC, 21);
+        backbufferGraphics.drawString(Float.toString(player.getHP()), 400, 90);
+//        if (player.getHP() <= 0){
+//            Font nfont = new Font("Serif", Font.ITALIC, 80);
+//            backbufferGraphics.setFont(nfont);
+//            backbufferGraphics.setColor(Color.white);
+//            backbufferGraphics.drawString("GAME OVER", 100, 200);
+//            //Thread.sleep(4000);
+//            //System.exit(0);
+//        }
         backbufferGraphics.setFont(font);
         backbufferGraphics.setColor(Color.red);
-        backbufferGraphics.drawString("Your power :   " + Float.toString(player.getPower()), 400, 150);
+        backbufferGraphics.drawString(Float.toString(player.getPower()), 400, 150);
 
 
 
