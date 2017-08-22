@@ -144,14 +144,6 @@ public class GameWindow extends Frame {
         backbufferGraphics.setColor(Color.white);
         backbufferGraphics.drawString("Your HP",400,90);
         backbufferGraphics.drawString(Float.toString(player.getHP()), 500, 90);
-//        if (player.getHP() <= 0){
-//            Font nfont = new Font("Serif", Font.ITALIC, 80);
-//            backbufferGraphics.setFont(nfont);
-//            backbufferGraphics.setColor(Color.white);
-//            backbufferGraphics.drawString("GAME OVER", 100, 200);
-//            //Thread.sleep(4000);
-//            //System.exit(0);
-//        }
         backbufferGraphics.drawString("Your Exp", 400,150);
         backbufferGraphics.drawString(Float.toString(player.getExp()), 500, 150);
 

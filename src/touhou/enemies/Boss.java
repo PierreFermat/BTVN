@@ -25,7 +25,8 @@ public class Boss extends GameObject implements PhysicalBody {
     private BoxCollider boxCollider;
     private int bulletlock;
     public Boss(){
-        boxCollider = new BoxCollider(20,20);
+        super();
+        boxCollider = new BoxCollider(40,40);
         children.add(boxCollider);
         animation = new Animation(
                 SpriteUtils.loadImage("assets/images/enemies/level0/black/1.png"),
@@ -125,16 +126,15 @@ public class Boss extends GameObject implements PhysicalBody {
     public void setHP(int HP) {
         this.HP = HP;
     }
+    public boolean isActive() {
+        return this.isActive;
+    }
 
     @Override
     public BoxCollider getBoxCollider() {
         return this.boxCollider;
     }
 
-    @Override
-    public boolean isActive() {
-        return false;
-    }
     public void  getHit(){
         Explosion explosion = new Explosion();
         explosion.getPosition().set(this.position);
