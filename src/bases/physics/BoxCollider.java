@@ -15,14 +15,14 @@ public class BoxCollider extends GameObject {
     public BoxCollider(float width, float height){
         this(0,0,width,height);
     }
-    public float left(){
+    public double left(){
         return this.screenPosition.x - this.width/2;
     }
-    public float right(){ return this.screenPosition.x + this.width / 2;}
-    public float bottom(){
+    public double right(){ return this.screenPosition.x + this.width / 2;}
+    public double bottom(){
         return this.screenPosition.y + this.height/2;
     }
-    public float top(){
+    public double top(){
         return this.screenPosition.y - this.height/2;
     }
 

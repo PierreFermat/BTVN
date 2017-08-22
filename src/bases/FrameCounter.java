@@ -6,10 +6,13 @@ package bases;
 public class FrameCounter {
     private int count;
     private int countMax;
+    private int Time;
 
     public FrameCounter(int countMax) {
         this.countMax = countMax;
         this.count = 0;
+
+
     }
 
 
@@ -29,7 +32,8 @@ public class FrameCounter {
     }
 
     public void reset() {
-        this.count = 0;
+
+            this.count = 0;
     }
 
     public float getCount() {

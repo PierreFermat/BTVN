@@ -4,6 +4,7 @@ import bases.Constraints;
 import bases.FrameCounter;
 import bases.GameObject;
 import touhou.background.Background;
+import touhou.enemies.Boss;
 import touhou.enemies.EnemySpawner;
 //import touhou.explosion.Explosion;
 import touhou.inputs.InputManager;
@@ -18,6 +19,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import static java.lang.Math.sin;
 import static touhou.players.Shield.*;
 
 //https://github.com/qhuydtvt/ci1-huynq
@@ -39,6 +41,7 @@ public class GameWindow extends Frame {
     EnemySpawner enemySpawner = new EnemySpawner();        //TODO: Sua thanh GameObject
     InputManager inputManager = new InputManager();
     public FrameCounter powercounter;
+    public Boss boss;
 
 
     public GameWindow() {
@@ -119,11 +122,15 @@ public class GameWindow extends Frame {
 
     private void run() {
         GameObject.runAll();
-        enemySpawner.spawn();
         if(powercounter.run()) {
-            player.setPower(player.getPower()+1);
+            player.setExp(player.getExp()+1);
             powercounter.reset();
         }
+        if(background.getPosition().y == 300) {
+            enemySpawner.spawnBoss();
+        }
+        if(background.getPosition().y < 300)
+            enemySpawner.spawn();
 
     }
 
@@ -135,7 +142,8 @@ public class GameWindow extends Frame {
         Font font = new Font("Serif", Font.ITALIC, 21);
         backbufferGraphics.setFont(font);
         backbufferGraphics.setColor(Color.white);
-        backbufferGraphics.drawString(Float.toString(player.getHP()), 400, 90);
+        backbufferGraphics.drawString("Your HP",400,90);
+        backbufferGraphics.drawString(Float.toString(player.getHP()), 500, 90);
 //        if (player.getHP() <= 0){
 //            Font nfont = new Font("Serif", Font.ITALIC, 80);
 //            backbufferGraphics.setFont(nfont);
@@ -144,9 +152,8 @@ public class GameWindow extends Frame {
 //            //Thread.sleep(4000);
 //            //System.exit(0);
 //        }
-        backbufferGraphics.setFont(font);
-        backbufferGraphics.setColor(Color.red);
-        backbufferGraphics.drawString(Float.toString(player.getPower()), 400, 150);
+        backbufferGraphics.drawString("Your Exp", 400,150);
+        backbufferGraphics.drawString(Float.toString(player.getExp()), 500, 150);
 
 
 

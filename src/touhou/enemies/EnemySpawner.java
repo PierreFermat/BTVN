@@ -22,4 +22,9 @@ public class EnemySpawner extends GameObject {
             GameObject.add(enemy);
         }
     }
+    public void spawnBoss(){
+        Boss boss = new Boss();
+        boss.getPosition().set(190,100);
+        GameObject.add(boss);
+    }
 }

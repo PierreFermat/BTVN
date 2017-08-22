@@ -6,24 +6,24 @@ import static java.lang.Math.sqrt;
  * Created by huynq on 8/2/17.
  */
 public class Vector2D {
-    public float x;
-    public float y;
+    public double x;
+    public double y;
 
     public Vector2D() {
         this(0, 0);
     }
 
-    public Vector2D(float x, float y) {
+    public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public void addUp(float dx, float dy) {
+    public void addUp(double dx, double dy) {
         this.x += dx;
         this.y += dy;
     }
 
-    public void set(float x, float y) {
+    public void set(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -40,7 +40,7 @@ public class Vector2D {
         addUp(other.x, other.y);
     }
 
-    public void subtractBy(float dx, float dy) {
+    public void subtractBy(double dx, double dy) {
         this.x -= dx;
         this.y -= dy;
     }
@@ -49,7 +49,7 @@ public class Vector2D {
         subtractBy(other.x, other.y);
     }
 
-    public Vector2D add(float dx, float dy) {
+    public Vector2D add(double dx, double dy) {
 //        Vector2D newVector = new Vector2D();
 //        newVector.x = this.x + dx;
 //        newVector.y = this.y + dy;
@@ -65,17 +65,17 @@ public class Vector2D {
         return new Vector2D(this.x * f, this.y * f);
     }
 
-    public void multiplyBy(float x, float y){
+    public void multiplyBy(double x, double y){
         this.x *= x;
         this.y *= y;
     }
 
-    public float magnitude() {
-        return (float) sqrt(this.x * this.x + this.y * this.y);
+    public double magnitude() {
+        return sqrt(this.x * this.x + this.y * this.y);
     }
 
     public Vector2D normalize() {
-        float mag = magnitude();
+        double mag = magnitude();
         return new Vector2D(this.x / mag, this.y / mag);
     }
 
@@ -87,14 +87,14 @@ public class Vector2D {
                 '}';
     }
 
-    public Vector2D subtract(float dx, float dy) {
+    public Vector2D subtract(double dx, double dy) {
         return new Vector2D(x-dx,y-dy);
 
     }
     public Vector2D subtract(Vector2D vector2D){
         return new Vector2D(x- vector2D.x,y - vector2D.y);
     }
-    public float distance(Vector2D vector2D){
+    public double distance(Vector2D vector2D){
         return (this.subtract(vector2D).magnitude());
     }
 }

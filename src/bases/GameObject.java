@@ -59,7 +59,7 @@ public class GameObject {
         isActive = true;
     }
     public static <T extends GameObject> T MinimumDistance(Vector2D position, Class<T> classz){
-        float minDis = 1000000000, t;
+        double minDis = 1000000000, t;
         T result = null;
         for (GameObject gameObject : gameObjects){
             if (gameObject.getActive()){

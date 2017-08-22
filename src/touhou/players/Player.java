@@ -22,8 +22,7 @@ public class Player extends GameObject implements PhysicalBody {
     private boolean spellLock;
     private BoxCollider boxCollider;
     private float HP;
-    private int power;
-    private int spellQuantity;
+    private int exp;
     private Balls balls;
     private Shield shield;
     private FrameCounter shieldCounter;
@@ -42,10 +41,8 @@ public class Player extends GameObject implements PhysicalBody {
         creatleftball();
         children.add(boxCollider);
         HP = 500;
-        spellQuantity = 1;
         shieldCounter = new FrameCounter(50);
         velocity = new Vector2D();
-
 
     }
 
@@ -59,12 +56,12 @@ public class Player extends GameObject implements PhysicalBody {
         children.add(balls);
     }
 
-    public int getPower() {
-        return power;
+    public int getExp() {
+        return exp;
     }
 
-    public void setPower(int power) {
-        this.power = power;
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
     public void setContraints(Constraints contraints) {
@@ -88,38 +85,25 @@ public class Player extends GameObject implements PhysicalBody {
         if (constraints != null) {
             constraints.make(position);
         }
-        if(inputManager.aPressed) {
-            if(this.getPower() > 10*spellQuantity) {
-                this.setPower(this.getPower() - 10 * spellQuantity);
-                spellQuantity += 1;
-                if(spellQuantity >= 4)
-                    spellQuantity = 3;
-                    this.setPower(this.getPower()+ 30);
+        if(inputManager.xPressed){
+            if(getExp()> 100){
+                castSpell_3();
             }
-        }
-        if(inputManager.sPressed) {
-            if (this.getPower() > 10) {
-                this.setPower(this.getPower() - 10);
-                shield = new Shield(0,0);
-                children.add(shield);
-                shield.setActive(true);
+            else {
+                if(getExp()>10){
+                    castSpell_2();
+                }
+                else {
+                    castSpell_1();
+                }
             }
         }
 
-        switch (spellQuantity) {
-            case 1:
-                castSpell_1();
-                break;
-            case 2:
-                castSpell_2();
-                break;
-            case 3:
-                castSpell_3();
-                break;
-        }
-        if (this.getHP()<=0) {
-            this.setActive(false);
-        }
+
+
+//        if (this.getHP()<=0) {
+//            this.setActive(false);
+//        }
     }
 
     private void creatSpell(float x,float y,float typebullet) {

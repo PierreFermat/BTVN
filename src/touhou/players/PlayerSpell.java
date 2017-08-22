@@ -9,6 +9,7 @@ import bases.pools.GameObjectPools;
 import bases.renderers.Animation;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
+import touhou.enemies.Boss;
 import touhou.enemies.Enemy;
 import touhou.explosion.Explosion;
 
@@ -16,7 +17,7 @@ import touhou.explosion.Explosion;
 public class PlayerSpell extends GameObject implements PhysicalBody {
     private static final float SPEED = -10 ;
     private BoxCollider boxCollider;
-    private float damage;
+    private int damage;
     private float typeBullet;
     private Player player;
 
@@ -43,6 +44,7 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
         super.run(parentPosition);
         position.addUp(typeBullet, SPEED);
         hitEnemy();
+        hitBoss();
         deActive();
     }
 
@@ -58,6 +60,15 @@ public class PlayerSpell extends GameObject implements PhysicalBody {
             enemy.setEnemyHP(enemy.getEnemyHP() - this.damage);
             enemy.getHit();
             this.isActive = false;
+        }
+    }
+    private void hitBoss(){
+        Boss boss = Physics.collideWith(this.boxCollider, Boss.class);
+        if(boss != null){
+            boss.setHP(boss.getHP() - this.damage);
+            boss.getHit();
+            this.isActive =false;
+
         }
     }
 

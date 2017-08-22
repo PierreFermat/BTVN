@@ -16,6 +16,8 @@ import touhou.players.Player;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+import static java.lang.Math.*;
+
 public class Enemy extends GameObject implements PhysicalBody {
     private static final float SPEED = 2;
     private FrameCounter frameCounter;
@@ -24,10 +26,13 @@ public class Enemy extends GameObject implements PhysicalBody {
     private  float damage;
     private Random random = new Random();
     private int typeEnemy;
+    public Vector2D velocity;
 
     public Enemy(){
         super();
-        frameCounter = new FrameCounter(30);
+        velocity = new Vector2D();
+        velocity.set(0, SPEED);
+        frameCounter = new FrameCounter(20);
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
         damage = 100;
@@ -86,28 +91,28 @@ public class Enemy extends GameObject implements PhysicalBody {
     }
     private void bullet_1(){
         if(frameCounter.run()) {
-            CreatBullet(1,10, 2);
-            CreatBullet(1,10,0);
-            CreatBullet(1,10, -2);
+            CreatBullet(15, 20,  - 0.17, 2,5);
+            CreatBullet(0, 20, 0, 2,5);
+            CreatBullet(-15,20, 0.17, 2,5);
             frameCounter.reset();
         }
     }
     private void bullet_0(){
         if(frameCounter.run()) {
-
-            CreatBullet(1,10,0);
-
+            CreatBullet(0,0,0,2,5);
             frameCounter.reset();
         }
     }
-    private void CreatBullet(float x,float y, float typebullet) {
+    private void CreatBullet(double x,double y, double typeBullet, double SpeedOthers,float SPEED) {
         EnemyBullet newBullet = GameObjectPools.recycle(EnemyBullet.class);
-        newBullet.setTypebullet(typebullet);
+        newBullet.setTypeBullet(typeBullet);
+        newBullet.setSpeedOther(SpeedOthers);
+        newBullet.setSPEED(SPEED);
         newBullet.getPosition().set(this.position.add(x, y));
     }
 
     private void fly() {
-        position.addUp(0,SPEED);
+        position.addUp(velocity);
     }
 
     @Override
