@@ -3,11 +3,13 @@ package touhou;
 import bases.Constraints;
 import bases.FrameCounter;
 import bases.GameObject;
+import tklibs.SpriteUtils;
 import touhou.background.Background;
 import touhou.enemies.Boss;
 import touhou.enemies.EnemySpawner;
 //import touhou.explosion.Explosion;
 import touhou.inputs.InputManager;
+import touhou.items.*;
 import touhou.players.Player;
 import touhou.players.Shield;
 
@@ -42,7 +44,17 @@ public class GameWindow extends Frame {
     InputManager inputManager = new InputManager();
     public FrameCounter powercounter;
     public Boss boss;
-
+    public String playerHP ;
+    public String playerPower;
+    public BufferedImage hearts;
+    public  BufferedImage playerImage;
+    public BufferedImage playerBanner;
+    public BufferedImage Item1;
+    public BufferedImage Item2;
+    public BufferedImage BossBanner;
+    public BufferedImage enemyBanner;
+    public RedItemSpawners redItems = new RedItemSpawners();
+    public BlueItemSpawners blueItems = new BlueItemSpawners();
 
     public GameWindow() {
         pack();
@@ -51,6 +63,8 @@ public class GameWindow extends Frame {
         setupGameLoop();
         setupWindow();
         powercounter = new FrameCounter(50);
+        GameObject.add(redItems);
+        GameObject.add(blueItems);
     }
 
     private void addPlayer() {
@@ -72,8 +86,17 @@ public class GameWindow extends Frame {
 
     private void setupWindow() {
         this.setSize(1024, 768);
+        playerHP = Float.toString(player.getHP());
+        playerPower = Float.toString(player.getExp());
+        playerImage = SpriteUtils.loadImage("assets/images/hud/player.png");
+        hearts = SpriteUtils.loadImage("assets/images/hud/Love-Heart-20.png");
+        playerBanner = SpriteUtils.loadImage("assets/images/hud/picture.png");
+        Item1 = SpriteUtils.loadImage("assets/images/items/power-up-blue.png");
+        Item2 = SpriteUtils.loadImage("assets/images/items/power-up-red.png");
+        BossBanner = SpriteUtils.loadImage("assets/images/hud/ring.png");
+        enemyBanner = SpriteUtils.loadImage("assets/images/hud/enemy-banner.png");
 
-        this.setTitle("Touhou - Remade by QHuyDTVT");
+        this.setTitle("Touhou - Remade by ThanhCNTTBK");
         this.setVisible(true);
 
         this.backbufferImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -142,13 +165,14 @@ public class GameWindow extends Frame {
         Font font = new Font("Serif", Font.ITALIC, 21);
         backbufferGraphics.setFont(font);
         backbufferGraphics.setColor(Color.white);
-        backbufferGraphics.drawString("Your HP",400,90);
-        backbufferGraphics.drawString(Float.toString(player.getHP()), 500, 90);
-        backbufferGraphics.drawString("Your Exp", 400,150);
-        backbufferGraphics.drawString(Float.toString(player.getExp()), 500, 150);
-
-
-
+        backbufferGraphics.drawImage(playerImage,500,90,null);
+        backbufferGraphics.drawString(playerHP, 620, 105);
+        backbufferGraphics.drawImage(hearts,670,90,null);
+        backbufferGraphics.drawImage(playerBanner,400,50,null);
+        backbufferGraphics.drawImage(Item1,500,140,null);
+        backbufferGraphics.drawImage(Item2,500,190,null);
+        backbufferGraphics.drawImage(BossBanner,400,400,null);
+        backbufferGraphics.drawImage(enemyBanner,600,480,null);
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
 
     }

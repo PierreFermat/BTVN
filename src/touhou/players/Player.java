@@ -28,7 +28,10 @@ public class Player extends GameObject implements PhysicalBody {
     private FrameCounter shieldCounter;
     private Vector2D velocity;
     private PlayerAnimator animator;
-
+    private boolean trippleSpells;
+    private boolean doubleSpells;
+    private int TimeSpell3;
+    private int TimeSpell2;
 
     public Player() {
         super();
@@ -43,6 +46,8 @@ public class Player extends GameObject implements PhysicalBody {
         HP = 500;
         shieldCounter = new FrameCounter(50);
         velocity = new Vector2D();
+        TimeSpell3 = 500;
+        TimeSpell2 = 500;
 
     }
 
@@ -54,6 +59,22 @@ public class Player extends GameObject implements PhysicalBody {
     private void creatleftball(){
         balls = new Balls(-20,0);
         children.add(balls);
+    }
+
+    public void setTrippleSpells(boolean trippleSpells) {
+        this.trippleSpells = trippleSpells;
+    }
+
+    public void setDoubleSpells(boolean doubleSpells) {
+        this.doubleSpells = doubleSpells;
+    }
+
+    public int getTimeSpell3() {
+        return TimeSpell3;
+    }
+
+    public int getTimeSpell2() {
+        return TimeSpell2;
     }
 
     public int getExp() {
@@ -86,17 +107,7 @@ public class Player extends GameObject implements PhysicalBody {
             constraints.make(position);
         }
         if(inputManager.xPressed){
-            if(getExp()> 100){
-                castSpell_3();
-            }
-            else {
-                if(getExp()>10){
-                    castSpell_2();
-                }
-                else {
-                    castSpell_1();
-                }
-            }
+            castSpell();
         }
 
 
@@ -110,6 +121,30 @@ public class Player extends GameObject implements PhysicalBody {
         PlayerSpell newSpell = GameObjectPools.recycle(PlayerSpell.class);
         newSpell.setTypeBullet(typebullet);
         newSpell.getPosition().set(this.position.add(x, y));
+    }
+    private void castSpell(){
+        if(trippleSpells){
+            castSpell_3();
+            TimeSpell3 --;
+            if(TimeSpell3 <0){
+                this.setTrippleSpells(false);
+                TimeSpell3 = 500;
+            }
+
+        }
+        else {
+            if (doubleSpells) {
+                castSpell_2();
+                TimeSpell2 --;
+                if(TimeSpell2 <0){
+                    this.setDoubleSpells(false);
+                    TimeSpell2 = 500;
+                }
+            }
+            else {
+                castSpell_1();
+            }
+        }
     }
     private void castSpell_1(){
         if (inputManager.xPressed && !spellLock) {
