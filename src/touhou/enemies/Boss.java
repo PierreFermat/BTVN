@@ -61,9 +61,12 @@ public class Boss extends GameObject implements PhysicalBody {
     }
     private void fly() {
         if (bulletlock <= 0) {
-            this.position.addUp(2,0);
+            this.position.addUp(2,1);
             if (this.position.x >= 384){
                 this.position.x = 0;
+            }
+            if(this.position.y >= 300){
+                this.position.y = 100;
             }
         }
     }
@@ -118,7 +121,7 @@ public class Boss extends GameObject implements PhysicalBody {
             }
             bulletlock --;
             if(bulletlock <= 0){
-                bulletlock = -100;
+                bulletlock = -75;
             }
 
         }

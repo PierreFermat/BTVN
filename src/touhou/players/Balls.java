@@ -28,7 +28,7 @@ public class Balls extends GameObject implements PhysicalBody{
     public Balls(float x,float y){
         super();
         this.position.set(x,y);
-        frameCounter = new FrameCounter(30);
+        frameCounter = new FrameCounter(10);
         boxCollider = new BoxCollider(20,20);
         children.add(boxCollider);
         this.animation = new Animation(
