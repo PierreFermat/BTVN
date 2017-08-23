@@ -12,6 +12,7 @@ import bases.renderers.ImageRenderer;
 import bases.renderers.Renderer;
 import tklibs.SpriteUtils;
 import touhou.explosion.Explosion;
+import touhou.players.BulletSpawners;
 import touhou.players.Player;
 
 public class Boss extends GameObject implements PhysicalBody {
@@ -49,15 +50,15 @@ public class Boss extends GameObject implements PhysicalBody {
         }else {
             shoot();
         }
-        shoot2();
         if (this.getHP() <= 0){
             this.isActive = false;
         }
+//        CreatAssistant();
     }
-
-
-
-
+    private void CreatAssistant() {
+        BASpawners baSpawners = new BASpawners();
+        children.add(baSpawners);
+    }
     private void fly() {
         if (bulletlock <= 0) {
             this.position.addUp(2,0);
@@ -147,37 +148,34 @@ public class Boss extends GameObject implements PhysicalBody {
         CreatBullet(0, 0, -0.875, 0,SPEED);
     }
     private void flowBullet2(float SPEED){
+        CreatBullet(-90,20,0.5,0,SPEED);
+        CreatBullet(-60,20,0.5,0,SPEED);
         CreatBullet(-30,20,0.5,0,SPEED);
-        CreatBullet(-20,20,0.5,0,SPEED);
-        CreatBullet(-10,20,0.5,0,SPEED);
         CreatBullet(-0,20,0.5,0,SPEED);
-        CreatBullet(-10,20,0.5,0,SPEED);
-        CreatBullet(-20,20,0.5,0,SPEED);
         CreatBullet(-30,20,0.5,0,SPEED);
-        CreatBullet(-30,20,0.5,0,SPEED);
+        CreatBullet(-60,20,0.5,0,SPEED);
+        CreatBullet(-90,20,0.5,0,SPEED);
+        CreatBullet(-90,-20,-0.5,0,SPEED);
+        CreatBullet(-60,-20,-0.5,0,SPEED);
         CreatBullet(-30,-20,-0.5,0,SPEED);
-        CreatBullet(-20,-20,-0.5,0,SPEED);
-        CreatBullet(-10,-20,-0.5,0,SPEED);
         CreatBullet(-0,-20,-0.5,0,SPEED);
-        CreatBullet(-10,-20,-0.5,0,SPEED);
-        CreatBullet(-20,-20,-0.5,0,SPEED);
         CreatBullet(-30,-20,-0.5,0,SPEED);
-        CreatBullet(-30,-20,-0.5,0,SPEED);
-        CreatBullet(-30,-20,-0.5,0,SPEED);
+        CreatBullet(-60,-20,-0.5,0,SPEED);
+        CreatBullet(-90,-20,-0.5,0,SPEED);
+        CreatBullet(20,-90,0,0,SPEED);
+        CreatBullet(20,-60,0,0,SPEED);
         CreatBullet(20,-30,0,0,SPEED);
-        CreatBullet(20,-20,0,0,SPEED);
-        CreatBullet(20,-10,0,0,SPEED);
         CreatBullet(20,-0,0,0,SPEED);
-        CreatBullet(20,-20,0,0,SPEED);
+        CreatBullet(20,-60,0,0,SPEED);
+        CreatBullet(20,-90,0,0,SPEED);
         CreatBullet(20,-30,0,0,SPEED);
-        CreatBullet(20,-10,0,0,SPEED);
+        CreatBullet(-20,-90,1,0,SPEED);
+        CreatBullet(-20,-60,1,0,SPEED);
         CreatBullet(-20,-30,1,0,SPEED);
-        CreatBullet(-20,-20,1,0,SPEED);
-        CreatBullet(-20,-10,1,0,SPEED);
         CreatBullet(-20,-0,1,0,SPEED);
-        CreatBullet(-20,-20,1,0,SPEED);
+        CreatBullet(-20,-60,1,0,SPEED);
+        CreatBullet(-20,-90,1,0,SPEED);
         CreatBullet(-20,-30,1,0,SPEED);
-        CreatBullet(-20,-10,1,0,SPEED);
     }
 
     private void CreatBullet(float x,float y, double typeBullet, double SpeedOther,float SPEED) {
