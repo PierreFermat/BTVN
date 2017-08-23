@@ -109,12 +109,9 @@ public class Player extends GameObject implements PhysicalBody {
         if(inputManager.xPressed){
             castSpell();
         }
-
-
-
-//        if (this.getHP()<=0) {
-//            this.setActive(false);
-//        }
+        if (this.getHP()<=0) {
+            this.setActive(false);
+        }
     }
 
     private void creatSpell(float x,float y,float typebullet) {

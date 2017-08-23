@@ -24,6 +24,7 @@ public class Boss extends GameObject implements PhysicalBody {
     private FrameCounter counterCounter;
     private BoxCollider boxCollider;
     private int bulletlock;
+    private int changebullet;
     public Boss(){
         super();
         boxCollider = new BoxCollider(40,40);
@@ -51,49 +52,28 @@ public class Boss extends GameObject implements PhysicalBody {
 
 
     private void fly() {
+        if (bulletlock <= 0) {
+            this.position.addUp(2,0);
+            if (this.position.x >= 384){
+                this.position.x = 0;
+            }
+        }
     }
     private void shoot() {
         if (bulletlock >= 0) {
+            changebullet ++;
+            if(changebullet > 2){
+                changebullet = 0;
+            }
             if(bulletlock >30){
                 if (frameCounter.run()) {
-                    CreatBullet(0, 0, 0, 0,5);
-                    CreatBullet(0, 0, 1, 0,5);
-                    CreatBullet(0, 0, 0.5, 0,5);
-                    CreatBullet(0, 0, -0.5, 0,5);
-                    CreatBullet(0, 0, 0.25, 0,5);
-                    CreatBullet(0, 0, -0.25, 0,5);
-                    CreatBullet(0, 0, 0.75, 0,5);
-                    CreatBullet(0, 0, -0.75, 0,5);
-                    CreatBullet(0, 0, 0.125, 0,5);
-                    CreatBullet(0, 0, 0.375, 0,5);
-                    CreatBullet(0, 0, 0.625, 0,5);
-                    CreatBullet(0, 0, 0.875, 0,5);
-                    CreatBullet(0, 0, -0.125, 0,5);
-                    CreatBullet(0, 0, -0.375, 0,5);
-                    CreatBullet(0, 0, -0.625, 0,5);
-                    CreatBullet(0, 0, -0.875, 0,5);
+                    flowBullet(5);
                     frameCounter.reset();
                 }
             }else{
                 if (TimeAttack.run()) {
-                    CreatBullet(0, 0, 0, 0, 3);
-                    CreatBullet(0, 0, 1, 0, 3);
-                    CreatBullet(0, 0, 0.5, 0, 3);
-                    CreatBullet(0, 0, -0.5, 0, 3);
-                    CreatBullet(0, 0, 0.25, 0, 3);
-                    CreatBullet(0, 0, -0.25, 0, 3);
-                    CreatBullet(0, 0, 0.75, 0, 3);
-                    CreatBullet(0, 0, -0.75, 0, 3);
-                    CreatBullet(0, 0, 0.125, 0, 3);
-                    CreatBullet(0, 0, 0.375, 0, 3);
-                    CreatBullet(0, 0, 0.625, 0, 3);
-                    CreatBullet(0, 0, 0.875, 0, 3);
-                    CreatBullet(0, 0, -0.125, 0, 3);
-                    CreatBullet(0, 0, -0.375, 0, 3);
-                    CreatBullet(0, 0, -0.625, 0, 3);
-                    CreatBullet(0, 0, -0.875, 0, 3);
+                    flowBullet(3);
                     TimeAttack.reset();
-
                 }
 
             }
@@ -109,6 +89,62 @@ public class Boss extends GameObject implements PhysicalBody {
                 bulletlock = 50;
             }
         }
+    }
+    private void flowBullet(float SPEED){
+        CreatBullet(0, 0, 0, 0,SPEED);
+        CreatBullet(0, 0, 1, 0,SPEED);
+        CreatBullet(0, 0, 0.5, 0,SPEED);
+        CreatBullet(0, 0, -0.5, 0,SPEED);
+        CreatBullet(0, 0, 0.25, 0,SPEED);
+        CreatBullet(0, 0, -0.25, 0,SPEED);
+        CreatBullet(0, 0, 0.75, 0,SPEED);
+        CreatBullet(0, 0, -0.75, 0,SPEED);
+        CreatBullet(0, 0, 0.125, 0,SPEED);
+        CreatBullet(0, 0, 0.375, 0,SPEED);
+        CreatBullet(0, 0, 0.625, 0,SPEED);
+        CreatBullet(0, 0, 0.875, 0,SPEED);
+        CreatBullet(0, 0, -0.125, 0,SPEED);
+        CreatBullet(0, 0, -0.375, 0,SPEED);
+        CreatBullet(0, 0, -0.625, 0,SPEED);
+        CreatBullet(0, 0, -0.875, 0,SPEED);
+    }
+    private void flowBullet2(float SPEED){
+        CreatBullet(-3,2,0,0,SPEED);
+        CreatBullet(-2,2,0,0,SPEED);
+        CreatBullet(-1,2,0,0,SPEED);
+        CreatBullet(-0,2,0,0,SPEED);
+        CreatBullet(-1,2,0,0,SPEED);
+        CreatBullet(-2,2,0,0,SPEED);
+        CreatBullet(-3,2,0,0,SPEED);
+        CreatBullet(-3,2,0,0,SPEED);
+        CreatBullet(-3,-2,1,0,SPEED);
+        CreatBullet(-2,-2,1,0,SPEED);
+        CreatBullet(-1,-2,1,0,SPEED);
+        CreatBullet(-0,-2,1,0,SPEED);
+        CreatBullet(-1,-2,1,0,SPEED);
+        CreatBullet(-2,-2,1,0,SPEED);
+        CreatBullet(-3,-2,1,0,SPEED);
+        CreatBullet(-3,-2,1,0,SPEED);
+        CreatBullet(-3,-2,1,0,SPEED);
+        CreatBullet(2,-3,0.5,0,SPEED);
+        CreatBullet(2,-2,0.5,0,SPEED);
+        CreatBullet(2,-1,0.5,0,SPEED);
+        CreatBullet(2,-0,0.5,0,SPEED);
+        CreatBullet(2,-2,0.5,0,SPEED);
+        CreatBullet(2,-3,0.5,0,SPEED);
+        CreatBullet(2,-1,0.5,0,SPEED);
+        CreatBullet(2,-3,-0.5,0,SPEED);
+        CreatBullet(2,-2,-0.5,0,SPEED);
+        CreatBullet(2,-1,-0.5,0,SPEED);
+        CreatBullet(2,-0,-0.5,0,SPEED);
+        CreatBullet(2,-2,-0.5,0,SPEED);
+        CreatBullet(2,-3,-0.5,0,SPEED);
+        CreatBullet(2,-1,-0.5,0,SPEED);
+
+
+
+
+
     }
 
     private void CreatBullet(float x,float y, double typeBullet, double SpeedOther,float SPEED) {

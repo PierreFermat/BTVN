@@ -86,8 +86,6 @@ public class GameWindow extends Frame {
 
     private void setupWindow() {
         this.setSize(1024, 768);
-        playerHP = Float.toString(player.getHP());
-        playerPower = Float.toString(player.getExp());
         playerImage = SpriteUtils.loadImage("assets/images/hud/player.png");
         hearts = SpriteUtils.loadImage("assets/images/hud/Love-Heart-20.png");
         playerBanner = SpriteUtils.loadImage("assets/images/hud/picture.png");
@@ -149,11 +147,14 @@ public class GameWindow extends Frame {
             player.setExp(player.getExp()+1);
             powercounter.reset();
         }
-        if(background.getPosition().y == 300) {
+        if(background.getPosition().y == 400) {
             enemySpawner.spawnBoss();
         }
-        if(background.getPosition().y < 300)
+        if(background.getPosition().y < 400) {
             enemySpawner.spawn();
+        }
+        playerHP = Float.toString(player.getHP());
+
 
     }
 
