@@ -44,11 +44,18 @@ public class Boss extends GameObject implements PhysicalBody {
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
         fly();
-        shoot();
+        if(this.getHP()< 300){
+            shoot2();
+        }else {
+            shoot();
+        }
+        shoot2();
         if (this.getHP() <= 0){
             this.isActive = false;
         }
     }
+
+
 
 
     private void fly() {
@@ -90,6 +97,37 @@ public class Boss extends GameObject implements PhysicalBody {
             }
         }
     }
+    private void shoot2() {
+        if (bulletlock >= 0) {
+            changebullet ++;
+            if(changebullet > 2){
+                changebullet = 0;
+            }
+            if(bulletlock >30){
+                if (frameCounter.run()) {
+                    flowBullet2(5);
+                    frameCounter.reset();
+                }
+            }else{
+                if (TimeAttack.run()) {
+                    flowBullet2(3);
+                    TimeAttack.reset();
+                }
+
+            }
+            bulletlock --;
+            if(bulletlock <= 0){
+                bulletlock = -100;
+            }
+
+        }
+        else {
+            bulletlock ++;
+            if(bulletlock >= -1){
+                bulletlock = 50;
+            }
+        }
+    }
     private void flowBullet(float SPEED){
         CreatBullet(0, 0, 0, 0,SPEED);
         CreatBullet(0, 0, 1, 0,SPEED);
@@ -109,42 +147,37 @@ public class Boss extends GameObject implements PhysicalBody {
         CreatBullet(0, 0, -0.875, 0,SPEED);
     }
     private void flowBullet2(float SPEED){
-        CreatBullet(-3,2,0,0,SPEED);
-        CreatBullet(-2,2,0,0,SPEED);
-        CreatBullet(-1,2,0,0,SPEED);
-        CreatBullet(-0,2,0,0,SPEED);
-        CreatBullet(-1,2,0,0,SPEED);
-        CreatBullet(-2,2,0,0,SPEED);
-        CreatBullet(-3,2,0,0,SPEED);
-        CreatBullet(-3,2,0,0,SPEED);
-        CreatBullet(-3,-2,1,0,SPEED);
-        CreatBullet(-2,-2,1,0,SPEED);
-        CreatBullet(-1,-2,1,0,SPEED);
-        CreatBullet(-0,-2,1,0,SPEED);
-        CreatBullet(-1,-2,1,0,SPEED);
-        CreatBullet(-2,-2,1,0,SPEED);
-        CreatBullet(-3,-2,1,0,SPEED);
-        CreatBullet(-3,-2,1,0,SPEED);
-        CreatBullet(-3,-2,1,0,SPEED);
-        CreatBullet(2,-3,0.5,0,SPEED);
-        CreatBullet(2,-2,0.5,0,SPEED);
-        CreatBullet(2,-1,0.5,0,SPEED);
-        CreatBullet(2,-0,0.5,0,SPEED);
-        CreatBullet(2,-2,0.5,0,SPEED);
-        CreatBullet(2,-3,0.5,0,SPEED);
-        CreatBullet(2,-1,0.5,0,SPEED);
-        CreatBullet(2,-3,-0.5,0,SPEED);
-        CreatBullet(2,-2,-0.5,0,SPEED);
-        CreatBullet(2,-1,-0.5,0,SPEED);
-        CreatBullet(2,-0,-0.5,0,SPEED);
-        CreatBullet(2,-2,-0.5,0,SPEED);
-        CreatBullet(2,-3,-0.5,0,SPEED);
-        CreatBullet(2,-1,-0.5,0,SPEED);
-
-
-
-
-
+        CreatBullet(-30,20,0.5,0,SPEED);
+        CreatBullet(-20,20,0.5,0,SPEED);
+        CreatBullet(-10,20,0.5,0,SPEED);
+        CreatBullet(-0,20,0.5,0,SPEED);
+        CreatBullet(-10,20,0.5,0,SPEED);
+        CreatBullet(-20,20,0.5,0,SPEED);
+        CreatBullet(-30,20,0.5,0,SPEED);
+        CreatBullet(-30,20,0.5,0,SPEED);
+        CreatBullet(-30,-20,-0.5,0,SPEED);
+        CreatBullet(-20,-20,-0.5,0,SPEED);
+        CreatBullet(-10,-20,-0.5,0,SPEED);
+        CreatBullet(-0,-20,-0.5,0,SPEED);
+        CreatBullet(-10,-20,-0.5,0,SPEED);
+        CreatBullet(-20,-20,-0.5,0,SPEED);
+        CreatBullet(-30,-20,-0.5,0,SPEED);
+        CreatBullet(-30,-20,-0.5,0,SPEED);
+        CreatBullet(-30,-20,-0.5,0,SPEED);
+        CreatBullet(20,-30,0,0,SPEED);
+        CreatBullet(20,-20,0,0,SPEED);
+        CreatBullet(20,-10,0,0,SPEED);
+        CreatBullet(20,-0,0,0,SPEED);
+        CreatBullet(20,-20,0,0,SPEED);
+        CreatBullet(20,-30,0,0,SPEED);
+        CreatBullet(20,-10,0,0,SPEED);
+        CreatBullet(-20,-30,1,0,SPEED);
+        CreatBullet(-20,-20,1,0,SPEED);
+        CreatBullet(-20,-10,1,0,SPEED);
+        CreatBullet(-20,-0,1,0,SPEED);
+        CreatBullet(-20,-20,1,0,SPEED);
+        CreatBullet(-20,-30,1,0,SPEED);
+        CreatBullet(-20,-10,1,0,SPEED);
     }
 
     private void CreatBullet(float x,float y, double typeBullet, double SpeedOther,float SPEED) {

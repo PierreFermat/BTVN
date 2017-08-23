@@ -91,15 +91,15 @@ public class Enemy extends GameObject implements PhysicalBody {
     }
     private void bullet_1(){
         if(frameCounter.run()) {
-            CreatBullet(15, 20,  - 0.17, 2,5);
-            CreatBullet(0, 20, 0, 2,5);
-            CreatBullet(-15,20, 0.17, 2,5);
+            CreatBullet(15, 20, 0.67, 2,5);
+            CreatBullet(0, 20, 0.5, 2,5);
+            CreatBullet(-15,20, 0.33, 2,5);
             frameCounter.reset();
         }
     }
     private void bullet_0(){
         if(frameCounter.run()) {
-            CreatBullet(0,0,0,2,5);
+            CreatBullet(0,0,0.5,2,5);
             frameCounter.reset();
         }
     }

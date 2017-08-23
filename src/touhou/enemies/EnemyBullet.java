@@ -61,7 +61,7 @@ public class EnemyBullet extends GameObject implements PhysicalBody {
 
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
-        position.addUp(SPEED*sin(typeBullet*p), SPEED* cos(typeBullet*p) + speedOther);
+        position.addUp(SPEED*cos(typeBullet*p), SPEED* sin(typeBullet*p) + speedOther);
         hitPlayer();
         deActive();
     }
