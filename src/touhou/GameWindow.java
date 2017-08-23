@@ -153,6 +153,7 @@ public class GameWindow extends Frame {
         if(background.getPosition().y < 400) {
             enemySpawner.spawn();
         }
+
         playerHP = Float.toString(player.getHP());
 
 
